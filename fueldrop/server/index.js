@@ -6,3 +6,7 @@ const PORT = 5000;
 
 app.use(cors());
 app.use(express.json());
+
+app.listen (PORT,() => {
+    console.log("yes yes");
+});
