@@ -16,13 +16,13 @@ function Register(){
                 />
             <Input 
                 type = {text}
-                InputName = {sName}
+                InputName = {lName}
                 placeholder = {"Last Name"}
                 />
             <Input 
                 type = {number}
-                InputName = {cellNo}
-                placeholder = {"Cellphone Number"} 
+                InputName = {cellphone}
+                placeholder = {"Cellphone"} 
                 />
             <Input 
                 type = {password}
