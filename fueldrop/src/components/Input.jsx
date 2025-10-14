@@ -1,11 +1,11 @@
 import React from "react";
 
-function Input(){
+function Input(props){
 
     return(
 
         <form>
-            <input> type={type} name={InputName} placeholder={placeholder}</input>
+            <input className ="button" type={props.type} name={props.name} placeholder={props.placeholder}/>
         </form>
     );
 }

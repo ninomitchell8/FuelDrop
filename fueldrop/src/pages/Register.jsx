@@ -1,6 +1,6 @@
 import React from "react";
-import Input from"..components/Input.jsx";
-import Button from "..components/Button.jsx"
+import Input from "../components/Input.jsx";
+import Button from "../components/Button.jsx"
 
 function Register(){
 
@@ -10,33 +10,47 @@ function Register(){
             <h1>Register</h1>
             
             <Input 
-                type = {text}
-                InputName ={fName}
-                placeholder = {"First Name"}
+                type = "text"
+                inputName = "fName"
+                placeholder = "First Name"
                 />
             <Input 
-                type = {text}
-                InputName = {lName}
-                placeholder = {"Last Name"}
+                type = "text"
+                inputName = "lName"
+                placeholder = "Last Name"
                 />
             <Input 
-                type = {number}
-                InputName = {cellphone}
-                placeholder = {"Cellphone"} 
+                type = "number"
+                inputName = "cellphone"
+                placeholder = "Cellphone"
                 />
+
             <Input 
-                type = {password}
-                InputName = {password}
-                placeholder = {"Create password"}
+                type = "email"
+                inputName = "email"
+                placeholder = "Email"
+                />
+
+            <Input 
+                type = "password"
+                inputName = "password"
+                placeholder = "Create password"
                 />
             <Input
-                type = {confirmPassword}
-                inputName = {confirmPassword}
-                placeholder = {"Confirm password"} 
+                type = "password"
+                inputName = "confirmPassword"
+                placeholder = "Confirm password" 
                 />
             <Button 
-                type ={submit}
-                buttonName = {Register}
+                type ="submit"
+                name = "Submit"
+                />
+            <p> OR </p>
+
+            <Button 
+                type = "submit"
+                name = "Login"
+                to  = "/Login.jsx"
                 />
         </div>
     )
