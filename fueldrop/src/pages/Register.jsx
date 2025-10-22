@@ -1,8 +1,27 @@
-import React from "react";
+import React, {useState} from "react";
 import Input from "../components/Input.jsx";
 import Button from "../components/Button.jsx"
 
+
 function Register(){
+
+   const [formData,setFormData] = useState ({fName:"", lName:"", cellphone:"", email:"", password:"", confirmPassword:""});//setform data
+   
+   const handleChange = (e) =>{
+        setFormData({formData, [e.target.name]: e.target.value}); //event properties
+    };
+
+//    const handleSubmit = async =>{
+
+//     e.preventDefault();
+
+//         try{
+
+//             const response = await fetch (,{
+//     });
+
+
+   };
 
     return(
 
@@ -54,6 +73,6 @@ function Register(){
                 />
         </div>
     )
-}
+};
 
 export default Register;
