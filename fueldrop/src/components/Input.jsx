@@ -4,9 +4,9 @@ function Input(props){
 
     return(
 
-        <form>
-            <input className ="button" type={props.type} name={props.name} placeholder={props.placeholder}/>
-        </form>
+      
+            <input className ="button" type={props.type} name={props.name} placeholder={props.placeholder} value={props.value} onChange={props.onChange}/>
+
     );
 }
 

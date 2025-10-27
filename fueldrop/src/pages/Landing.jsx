@@ -18,7 +18,7 @@ function Landing(){
             
             <Button
             type = "submit"
-            name = "Register"
+            name = "Create Account"
             to= "/Register.jsx"
             />
             
