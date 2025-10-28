@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
-const db = new sqlite3.Database("../fueldrop.db",(err) => {
+const db = new sqlite3.Database("./fueldrop.db",(err) => {
 
         if (err) console.error(err.message);
         
