@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Input from "../components/Input.jsx";
 import Button from "../components/Button.jsx"
+import { useNavigate } from "react-router-dom";
 
 
 function Register(){
@@ -12,6 +13,8 @@ function Register(){
     email:"", 
     password:"", 
     confirmPassword:""});//setform data
+
+   const navigate = useNavigate();
    
    const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value}); //event properties
@@ -34,6 +37,11 @@ function Register(){
         console.log("Success:", data.message);
         alert ("success");
 
+        if (response.ok){
+
+            navigate("/Login.jsx");
+        }
+
     }catch (err){
         console.error(err.message);
         alert(err.message);    
@@ -41,6 +49,8 @@ function Register(){
     
 
  };
+
+
 
     return(
 
