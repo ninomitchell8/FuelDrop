@@ -28,16 +28,17 @@ function Register(){
 
      try{
 
-        const response = await fetch ("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/register",{ 
+        const response = await fetch ("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/register",{ //fetching resource from network.pauses exuecution before functionuntil fetch executed
             method:"POST",
-            headers:{ "Content-Type": "application/json"},
-            body: JSON.stringify(formData),
+            headers:{ "Content-Type": "application/json"},//response data in JSON format
+            body: JSON.stringify(formData),//converts JSON data to string format
         });
         const data = await response.json();
         console.log("Success:", data.message);
         alert ("success");
 
-        if (response.ok){
+        if (response.ok){ //boolean value
+
 
             navigate("/Login.jsx");
         }
@@ -50,8 +51,7 @@ function Register(){
 
  };
 
-
-
+ 
     return(
 
         <div>

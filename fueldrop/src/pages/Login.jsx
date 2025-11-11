@@ -5,22 +5,69 @@ import Button from "../components/Button.jsx"
 
 function Login() {
 
+    const [formData, setFormData] = useState({
+
+        email: "",
+        password: ""
+
+    });
+
+    const navigate = useNavigate();
+
+    const handleChange = async (e) => {
+
+        setFormData({...formData, [e.target.name] : e.target.value });
+    }
+
+    const handleSubmit = async (e) =>{ 
+        
+        e.preventDefault() //prevent reload
+
+        try{
+
+            const response = await fetch ("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/login",{
+
+                method:"POST",
+            headers:{ "Content-Type": "application/json"},//response data in JSON format
+            body: JSON.stringify(formData),//converts JSON data to string format
+        });
+        const data = await response.json();
+        console.log("Success:", data.message);
+        alert ("success");
+
+        if (response.ok){ //boolean value
+
+
+            navigate("/Home.jsx");
+        }
+
+            }catch (err){
+
+                alert(err.message);
+            }
+    };
     
 
     return(
         <div>
             <h1> Login </h1>
 
+        <form onSubmit = {handleSubmit} >
+
             <Input 
                 type = "email"
-                inputName = "email"
+                name = "email"
                 placeholder = "Email"
+                value = {formData.email}
+                onchange = {handleChange}
                 />
 
             <Input 
                 type = {"password"}
-                inputName = "password"
+                name = "password"
                 placeholder = {"Enter password"}
+                value = {formData.password}
+                onChange = {handleChange}
                 />
 
             <Button 
@@ -35,10 +82,12 @@ function Login() {
                 name = "Create Account"
                 to = "/Register.jsx"
                 />
+        </form>
         </div>
-
+     
         
+
     )
-}
+};  
 
 export default Login;
