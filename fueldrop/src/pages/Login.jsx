@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Input from "../components/Input.jsx";
 import Button from "../components/Button.jsx"
@@ -17,7 +17,7 @@ function Login() {
     const handleChange = async (e) => {
 
         setFormData({...formData, [e.target.name] : e.target.value });
-    }
+    };
 
     const handleSubmit = async (e) =>{ 
         
@@ -59,7 +59,7 @@ function Login() {
                 name = "email"
                 placeholder = "Email"
                 value = {formData.email}
-                onchange = {handleChange}
+                onChange = {handleChange}
                 />
 
             <Input 
