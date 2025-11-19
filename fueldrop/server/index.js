@@ -2,14 +2,18 @@ import express from "express";
 import cors from "cors";
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
-import bcrypt from "bcrypt"; 
+import bcrypt from "bcryptjs"; 
 
 const app = express();
 const PORT = 5000;
 
-app.use(cors(
+app.use(cors({
+
+    origin: "*",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"]
     
-));
+}));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
@@ -22,7 +26,7 @@ const db = new sqlite3.Database("./fueldrop.db",(err) => {
     
 });
 
-app.post ('/register',(req, res) => {
+app.post ('/register',async (req, res) => {
 
     const {name,lastname,password,confirmPassword,email,cellphone} = req.body; //Object destructuring - extract req.body property
 
@@ -35,14 +39,17 @@ app.post ('/register',(req, res) => {
         return res.status(400).json({error: "Password does not match!"})
     }
 
+
+    
+
     try{
 
-        const hashedPassword =  bcrypt.hash(password, 10);
-    
+        const hashedPassword =  await bcrypt.hash(password, 10);
+
         const user = 'INSERT INTO users (name, lastname, password, email, cellphone) VALUES (?,?,?,?,?)';
         
 
-        db.run(user, [ name, lastname, hashedPassword, email, cellphone], function (err){
+        db.run(user, [name, lastname, hashedPassword, email, cellphone], function (err){
 
         if (err){
             console.error(err.message);
@@ -58,18 +65,18 @@ app.post ('/register',(req, res) => {
 
 });
 
-app.post('/login',(req, res) => {
+app.post('/login',async (req, res) => {
 
     const {email, password} = req.body;
 
-    if (!email | !password){
+    if (!email ||!password){
 
         return res.status(400),({error:"All fields required"});
     }
 
-    const checkUser = "SELECT * FROM users WHERE email = ?, password = ?";
+    const sql = "SELECT * FROM users WHERE email = ?";
     
-    db.get (checkUser, [email, password], async function(err,user ){
+    db.get (sql, [email], async function(err,user ){
 
         if (err){
 
@@ -98,6 +105,11 @@ app.post('/login',(req, res) => {
 
 });
 
+
+app.post ('/home',(req, res) => {
+
+
+});
 
 
 app.listen (PORT,() => {

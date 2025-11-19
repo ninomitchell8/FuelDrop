@@ -2,6 +2,8 @@ import React,{useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Input from "../components/Input.jsx";
 import Button from "../components/Button.jsx"
+import Navbar from "../components/Navbar.jsx";
+
 
 function Login() {
 
@@ -27,7 +29,7 @@ function Login() {
 
             const response = await fetch ("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/login",{
 
-                method:"POST",
+            method:"POST",
             headers:{ "Content-Type": "application/json"},//response data in JSON format
             body: JSON.stringify(formData),//converts JSON data to string format
         });
@@ -49,7 +51,9 @@ function Login() {
     
 
     return(
+        
         <div>
+            <Navbar />
             <h1> Login </h1>
 
         <form onSubmit = {handleSubmit} >
