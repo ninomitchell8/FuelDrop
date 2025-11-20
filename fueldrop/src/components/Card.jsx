@@ -10,8 +10,8 @@ function Card (props){
             <div className="card-body">
                 <figure>
                 <blockquote className="blockquote">
-                    <p>{props.content}</p>
-                    <p>{props.content}</p>
+                    <p>{props.primaryContent}</p>
+                    <p>{props.secondaryContent}</p>
                 </blockquote>
                 </figure>
             </div>
