@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../components/Button.jsx";
 import Navbar from "../components/Navbar.jsx";
 import Card from "../components/Card.jsx";
-
+import Checkbox from "../components/Checkbox.jsx";
 
 function Home(){
     
@@ -20,6 +20,17 @@ function Home(){
             cardHeader = "Diesel - 50ppm"
             primaryContent = "R19.20/Litre"
             secondaryContent = ""/>
+
+            <h4> Configure </h4>
+
+
+
+            <Checkbox 
+                name = "Vehicle"/>
+            
+            <Checkbox 
+                name = "Generator"/>
+
 
             <Button 
                 type = "submit"

@@ -41,7 +41,7 @@ function Register(){
         if (response.ok){ //boolean value
 
 
-            navigate("/Login.jsx");
+            navigate("/Login.jsx");                     
         }
 
     }catch (err){
