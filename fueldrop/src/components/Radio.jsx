@@ -1,16 +1,17 @@
 import React from "react";
 
-function Checkbox (props) {
+function Radio (props) {
 
     return (
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value={props.value} id={props.id} checked/>
-            <label class="form-check-label" for="checkChecked">
-                {props.name}
-            </label>
+        <div>
+            <div className="form-check">
+                <input className="form-check-input" type="radio" name={props.group} id="radio" value= {props.value}/>
+                <label className="form-check-label" for="radioDefault1">
+                    {props.labelName}
+                </label>
+            </div>
         </div>
-
     );
 }
 
-export default Checkbox;
+export default Radio;

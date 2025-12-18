@@ -1,3 +1,7 @@
+#radio {
+  text-align: left;
+}
+
 body{
 
   text-align: center;
@@ -14,3 +18,4 @@ Input{
 
   margin:20 px,20 px,20 px,20 px;
 }
+
