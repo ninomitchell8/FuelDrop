@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar.jsx";
 import Card from "../components/Card.jsx";
 import Radio from "../components/Radio.jsx";
 import Input from "../components/Input.jsx";
+import Select from "../components/Select.jsx";
 
 function Home(){
 
@@ -67,12 +68,37 @@ function Home(){
                 <Radio 
                     labelName = "Diesel - 50ppm"
                     group = "fuel"/> 
+                
+            </div>
+            <div>
+                <h4> Required Fuel</h4>                                                 
+                <Input
+                    type  = "number"
+                    name ="litres"
+                    placeholder = "Enter a number between 50 litres & 1000 litres"
+                    min = {50}
+                    max = {1000}
+                   />
+            <div>
+
+                <h4> Location</h4>
+                <Button
+                
+                    type = "submit"
+                    name = "Share Location"/>
+                    
+
+            </div>
+                
+            
             </div>        
                 <Button 
                     type = "submit"
                     name = "Fill Up"
                     />
             </div>
+
+          
     )
 }
 
