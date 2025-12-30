@@ -1,12 +1,13 @@
 import React from "react";
+import "./Input.css";
 
 function Input(props){
 
     return(
 
-      
-            <input className ="button" type={props.type} name={props.name} placeholder={props.placeholder} value={props.value} onChange={props.onChange} min={props.min} max ={props.max}/>
-
+        <div>
+            <input className ="input" type={props.type} name={props.name} placeholder={props.placeholder} value={props.value} onChange={props.onChange} min={props.min} max ={props.max}/>
+        </div>
     );
 }
 

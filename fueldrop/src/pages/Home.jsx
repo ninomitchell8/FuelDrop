@@ -1,24 +1,24 @@
-import React from "react";
+import React,{useState} from "react";
 import Button from "../components/Button.jsx";
 import Navbar from "../components/Navbar.jsx";
 import Card from "../components/Card.jsx";
 import Radio from "../components/Radio.jsx";
 import Input from "../components/Input.jsx";
-import Select from "../components/Select.jsx";
+
 
 function Home(){
 
-    // const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState({
     
     //         email: "",
     //         password: ""
     
-    //     });
+        });
     
     return(
         <div>
             <Navbar/>
-            <h3> Welcome to Fueldrop the fuelstation that comes to you!</h3>
+            <h3> Ready to fill up?</h3>
 
             <Card 
                 cardHeader  = "Petrol - 95 Unleaded"
@@ -54,9 +54,9 @@ function Home(){
                     placeholder = "Make"
                     />
                 <Input
-                type = "text"
-                name = "Model"
-                placeholder = "Model"/>
+                    type = "text"
+                    name = "Model"
+                    placeholder = "Model"/>
             </div>
             <div>
                 <h4>Select Fuel</h4>
@@ -73,7 +73,7 @@ function Home(){
             <div>
                 <h4> Required Fuel</h4>                                                 
                 <Input
-                    type  = "number"
+                    type  = "text"
                     name ="litres"
                     placeholder = "Enter a number between 50 litres & 1000 litres"
                     min = {50}

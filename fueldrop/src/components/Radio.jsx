@@ -1,12 +1,13 @@
 import React from "react";
+import "./Radio.css";
 
 function Radio (props) {
 
     return (
-        <div>
+        <div className = "radio">
             <div className="form-check">
-                <input className="form-check-input" type="radio" name={props.group} id="radio" value= {props.value}/>
-                <label className="form-check-label" for="radioDefault1">
+                <input className="check-input" type="radio" name={props.group} id="radio" value= {props.value}/>
+                <label className="check-label" for="radioDefault1">
                     {props.labelName}
                 </label>
             </div>

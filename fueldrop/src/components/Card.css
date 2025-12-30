@@ -1,0 +1,17 @@
+.card {
+
+    width: 50%;
+    text-align:centre;
+    margin-left: 25%;
+    padding: 10px;
+}
+
+.card-header{
+
+    background-color: aquamarine;
+}
+
+.card-body{
+
+    background-color:azure;
+}

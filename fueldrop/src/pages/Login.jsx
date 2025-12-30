@@ -2,8 +2,6 @@ import React,{useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Input from "../components/Input.jsx";
 import Button from "../components/Button.jsx"
-import Navbar from "../components/Navbar.jsx";
-
 
 function Login() {
 
@@ -53,7 +51,7 @@ function Login() {
     return(
         
         <div>
-            <Navbar />
+        
             <h1> Login </h1>
 
         <form onSubmit = {handleSubmit} >

@@ -1,9 +1,10 @@
 import React from"react";
+import  "./Card.css";
 
 function Card (props){
 
     return(
-        <div class="card">
+        <div className="card">
             <div className="card-header">
                 {props.cardHeader}
             </div>

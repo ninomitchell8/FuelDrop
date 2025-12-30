@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Input from "../components/Input.jsx";
 import Button from "../components/Button.jsx"
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar.jsx";
+
 
 
 function Register(){
