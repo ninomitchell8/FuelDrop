@@ -39,16 +39,12 @@ app.post ('/register',async (req, res) => {
         return res.status(400).json({error: "Password does not match!"})
     }
 
-
-    
-
     try{
 
         const hashedPassword =  await bcrypt.hash(password, 10);
 
         const user = 'INSERT INTO users (name, lastname, password, email, cellphone) VALUES (?,?,?,?,?)';
         
-
         db.run(user, [name, lastname, hashedPassword, email, cellphone], function (err){
 
         if (err){
@@ -107,6 +103,31 @@ app.post('/login',async (req, res) => {
 
 
 app.post ('/home',(req, res) => {
+
+
+});
+
+app.post("/configure",async(req,res) =>{
+
+    const { type,make,model,regNumber,fuel,litres} = req.body
+
+    if (!type || !make || !model || !regNumber || !fuel || !litres){
+
+        return res.status(400)({error: "All fields required"})
+    }
+
+    try{
+
+        const inventory = "INSERT INTO inventory (type, make,model,regNumber,fuel,litres) VALUES(?,?,?,?,?,?)";
+    
+
+     res.json({message: "Successfully added!"});
+    console.log(req.body);
+    
+    
+    }catch(err){
+        console.log(err)
+    }
 
 
 });
