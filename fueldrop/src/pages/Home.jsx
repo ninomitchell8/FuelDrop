@@ -8,98 +8,55 @@ import Input from "../components/Input.jsx";
 
 function Home(){
 
-    const [formData, setFormData] = useState({
+    // const [formData, setFormData] = useState({
     
-    //         email: "",
-    //         password: ""
+    // //         email: "",
+    // //         password: ""
     
-        });
+    //     });
     
     return(
         <div>
-            <Navbar/>
-            <h3> Ready to fill up?</h3>
-
-            <Card 
-                cardHeader  = "Petrol - 95 Unleaded"
-                 primaryContent =  "R21.12/Litre"
-                 secondaryContent = ""/>
-
-            <Card
-            cardHeader = "Diesel - 50ppm"
-            primaryContent = "R19.20/Litre"
-            secondaryContent = ""/>
-            <div>
-                <h4> Select Type </h4>
-
-                <Radio 
-                    labelName = "Vehicle"
-                    group = "type"/>
-                
-                <Radio 
-                    labelName = "Generator"
-                     group = "type"/>
-                
-                <Radio 
-                    labelName = "Farm Equipment"
-                    group = "type"/>
-                
-                <Radio                 
-                    labelName = "Marine"
-                    group = "type"/>
-
-                <Input 
-                    type = "text"
-                    name = "Make"
-                    placeholder = "Make"
-                    />
-                <Input
-                    type = "text"
-                    name = "Model"
-                    placeholder = "Model"/>
-            </div>
-            <div>
-                <h4>Select Fuel</h4>
-                
-                <Radio
-                    labelName = "Petrol - 95 Unleaded"
-                    group = "fuel"/>
-
-                <Radio 
-                    labelName = "Diesel - 50ppm"
-                    group = "fuel"/> 
-                
-            </div>
-            <div>
-                <h4> Required Fuel</h4>                                                 
-                <Input
-                    type  = "text"
-                    name ="litres"
-                    placeholder = "Enter a number between 50 litres & 1000 litres"
-                    min = {50}
-                    max = {1000}
-                   />
-            <div>
-
-                <h4> Location</h4>
-                <Button
-                
-                    type = "submit"
-                    name = "Share Location"/>
-                    
-
-            </div>
-                
             
-            </div>        
-                <Button 
-                    type = "submit"
-                    name = "Fill Up"
-                    />
-            </div>
+            <Navbar />
+                <h3> Ready to fill up?</h3>
+        
+                <div>
+                    <Card 
+                        cardHeader  = "Petrol - 95 Unleaded"
+                        primaryContent =  "R21.12/Litre"
+                        secondaryContent = ""/>
 
-          
-    )
+                    <Card
+                    cardHeader = "Diesel - 50ppm"
+                    primaryContent = "R19.20/Litre"
+                    secondaryContent = ""/>
+                <div/>
+
+                <div>
+                    <p> Add an item to your Fueldrop inventory before filling up. </p>
+
+                    <Button
+                    type = "submit"
+                    name = "+ Add Item"
+                    to = "/Configure.jsx"/>
+
+                </div>
+                    
+                <div>
+                    <h4>Location</h4>
+                    <Button                
+                        type = "submit"
+                        name = "Share Location"/>     
+                </div>
+                        
+                </div>        
+                    <Button 
+                    type = "submit"
+                    name = "Fill Up"/>
+                </div>
+         
+    );
 }
 
 export default Home;
