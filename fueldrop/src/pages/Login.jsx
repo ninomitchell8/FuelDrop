@@ -37,7 +37,6 @@ function Login() {
 
         if (response.ok){ //boolean value
 
-
             navigate("/Home.jsx");
         }
 
@@ -49,7 +48,7 @@ function Login() {
     
 
     return(
-        
+       
         <div>
         
             <h1> Login </h1>
