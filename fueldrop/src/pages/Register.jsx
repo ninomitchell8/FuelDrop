@@ -52,11 +52,9 @@ function Register(){
 
  };
 
- 
     return(
 
         <div>
-            <Navbar/>
             <h1>Register</h1>
         <form onSubmit = {handleSubmit}>
             <Input 

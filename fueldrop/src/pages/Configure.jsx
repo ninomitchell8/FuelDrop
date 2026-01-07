@@ -21,6 +21,7 @@ function Configure(){
 
     const navigate = useNavigate();
 
+
     const handleChange = async (e) => {
 
         setFormData ({...formData,[e.target.name]: e.target.value});
@@ -33,12 +34,11 @@ function Configure(){
 
         try{
 
-            const response = await fetch("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/configure",{
+            const response = await fetch("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/configure",{ 
 
                 method: "POST",
                 headers : {"Content-type": "application/json"},
-                credentials: "include",
-                body: JSON.stringify (formData),
+                body: JSON.stringify (formData)
             });
 
             const data = await response.json();
@@ -62,90 +62,90 @@ function Configure(){
             <Navbar/>
             
             <h3> Fill in Item details</h3>
-        <form onSubmit = {handleSubmit}>
+          <form onSubmit = {handleSubmit}>
             <div>
                 <h4> Select Type </h4>
 
                   <Radio 
                     labelName = "Car"
-                    group = "type"
+                    name = "type"
                     onChange = {handleChange}
                     value = "car"
                     />
 
                   <Radio 
                     labelName = "Bakkie"
-                    group = "type"
+                    name = "type"
                     onChange = {handleChange}
                     value = "bakkie"
                     />
 
                 <Radio 
                     labelName = "Truck"
-                    group = "type"
+                    name = "type"
                     onChange = {handleChange}
                     value = "truck"
                    />
 
                 <Radio 
                     labelName = "Bus"
-                    group = "type"
+                    name = "type"
                     onChange = {handleChange}
                     value = "bus"
                    />
                 
                 <Radio 
                     labelName = "Locomotive"
-                    group = "type"
+                    name = "type"
                     onChange = {handleChange}
                     value = "locomotive"
                    />
                 
                 <Radio 
                     labelName = "Generator"
-                    group = "type"
+                    name = "type"
                     onChange = {handleChange}
                     value = "generator"
                     />
 
                  <Radio 
                     labelName = "Boiler"
-                    group = "type"
+                    name = "type"
                     onChange = {handleChange}
                     value ="boiler"
                     />
                 
                 <Radio 
                     labelName = "Tractor"
-                    group = "type"
+                    name = "type"
                     onChange = {handleChange}
                     value = "tractor"
                     />
 
                  <Radio 
                     labelName = "Harvester"
-                    group = "type"
+                    name = "type"
                     onChange = {handleChange}
                     value = "harvester"
                     />
 
                  <Radio 
                     labelName = "Combine"
-                    group = "type"
+                    name = "type"
                     onChange = {handleChange}
                     value = "combine"
                      />
                 
                 <Radio                 
                     labelName = "Boat"
-                    group = "type"
+                    name = "type"
                     onChange = {handleChange}
                     value = "boat"
                     />
 
                 <Radio                 
                     labelName = "Other"
-                    group = "type"
+                    name = "type"
                     onChange = {handleChange}
                     value = "other"
                     />
@@ -175,13 +175,13 @@ function Configure(){
                 
                 <Radio
                     labelName = "Petrol - 95 Unleaded"
-                    group = "fuel"
+                    name = "fuel"
                     value = "petrol"
                     onChange = {handleChange}/>
 
                 <Radio 
                     labelName = "Diesel - 50ppm"
-                    group = "fuel"
+                    name = "fuel"
                     value = "diesel"
                     onChange = {handleChange}/> 
                 
@@ -199,12 +199,13 @@ function Configure(){
                     value = {formData.litres} />
             
             </div>
-
-            <Button
-                    type = "submit"
-                    name = "Save to inventory"  
-                    />
-        </form>
+            <div>
+                <Button
+                        type = "submit"
+                        name = "Save to inventory"  
+                        />
+            </div>
+          </form>
                 
             </div>
     )

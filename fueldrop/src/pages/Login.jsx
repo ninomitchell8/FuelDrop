@@ -37,13 +37,19 @@ function Login() {
 
         if (response.ok){ //boolean value
 
-            navigate("/Home.jsx");
+            navigate("/home.jsx");
+           
+            localStorage.setItem("token", data.token);
+            console.log("JWT:", data.token);
         }
 
             }catch (err){
 
                 alert(err.message);
             }
+        
+    
+        
     };
     
 

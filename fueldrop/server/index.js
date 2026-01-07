@@ -3,40 +3,41 @@ import cors from "cors";
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 import bcrypt from "bcryptjs"; 
-import session from "express-session";
+
+import jwt from "jsonwebtoken";
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT|| 5000;
+app.set("trust proxy", 1);
 
 app.use(cors({
 
     origin: "https://literate-cod-jpx676qxq6q3pwp5-5173.app.github.dev",
-    credentials : true,
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     
 }));
 
 app.use(express.json());
-
-app.use(session({
-    name: "fueldrop.sid",
-    secret: "super-secret-key", 
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        httpOnly: true,
-        secure: false,  // true only if HTTPS.
-        sameSite: "lax" //because diffrent ports asnd subdomains front and back
-    }
-}));
-
 app.use(express.urlencoded({extended:true}))
 
-function requireAuth(req, res, next) {
-    if (!req.session.user) {
-        return res.status(401).json({ error: "Unauthorized" });
-    }
+
+
+function auth(req, res, next) {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    return res.status(401).json({ error: "No token" });
+  }
+
+  try {
+    const token = authHeader.split(" ")[1];
+    const user = jwt.verify(token, "SUPER_SECRET_KEY");
+    req.user = user;
     next();
+  } catch (err) {
+    return res.status(401).json({ error: "Invalid token" });
+  }
 }
 
 
@@ -115,20 +116,28 @@ app.post('/login',async (req, res) => {
             return res.status (401).json({error : "Invalid Password"});
         }
 
-        req.session.user = {
-            id: user.id
-        };
+        const userId = { id: 1, email };
+        
+        const token = jwt.sign(userId, "SUPER_SECRET_KEY", {
+            expiresIn: "1h",
+        });
 
+
+        
         return res.json({
 
             message: "Login Success!",
             user: {id: user.id, name: user.name, email: user.email},
+            token
+        
         });
 
-        
     });
 
+        
+    
 });
+
 
 
 app.post ('/home',(req, res) => {
@@ -136,11 +145,11 @@ app.post ('/home',(req, res) => {
 
 });
 
-app.post("/configure",requireAuth,async(req,res) =>{
+app.post("/configure",async(req,res) =>{
 
     const { type,make,model,regNumber,fuel,litres} = req.body
 
-    const id = req.session.user.id;
+    const id = req.user.id;
 
     if (!type || !make || !model || !regNumber || !fuel || !litres){
 
@@ -167,6 +176,15 @@ app.post("/configure",requireAuth,async(req,res) =>{
     
 
 });
+
+app.post("/store-user-data", auth, (req, res) => {
+
+  console.log("AUTH USER:", req.user);
+  console.log("DATA:", req.body);
+
+  res.json({ success: true });
+});
+
 
 
 app.listen (PORT,() => {
