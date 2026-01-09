@@ -3,7 +3,6 @@ import cors from "cors";
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 import bcrypt from "bcryptjs"; 
-
 import jwt from "jsonwebtoken";
 
 const app = express();
@@ -41,7 +40,7 @@ function auth(req, res, next) {
 }
 
 
-const db = new sqlite3.Database("./fueldrop.db",(err) => {
+const db = new sqlite3.Database("/workspaces/FuelDrop/fueldrop/fueldrop.db",(err) => {
 
         if (err) console.error(err.message);
         
@@ -85,6 +84,9 @@ app.post ('/register',async (req, res) => {
 
 });
 
+
+
+
 app.post('/login',async (req, res) => {
 
     const {email, password} = req.body;
@@ -116,9 +118,11 @@ app.post('/login',async (req, res) => {
             return res.status (401).json({error : "Invalid Password"});
         }
 
-        const userId = { id: 1, email };
+        const payload = {   id: user.id,
+                            email: user.email
+                            };
         
-        const token = jwt.sign(userId, "SUPER_SECRET_KEY", {
+        const token = jwt.sign(payload, "SUPER_SECRET_KEY", {
             expiresIn: "1h",
         });
 
@@ -139,32 +143,37 @@ app.post('/login',async (req, res) => {
 });
 
 
-
 app.post ('/home',(req, res) => {
 
 
 });
 
-app.post("/configure",async(req,res) =>{
+
+
+
+app.post("/configure",auth,async(req,res) =>{
 
     const { type,make,model,regNumber,fuel,litres} = req.body
-
-    const id = req.user.id;
 
     if (!type || !make || !model || !regNumber || !fuel || !litres){
 
         return res.status(400).json({error: "All fields required"})
+
     }
+
+    const userId = req.user.id;
+
 
     try{
 
-        const inventory = "INSERT INTO inventory (type, make, model, regNumber, fuel, litres, id) VALUES(?,?,?,?,?,?,?)";
+        const inventory = "INSERT INTO inventory (type, make, model, regNumber, fuel, litres,id) VALUES(?,?,?,?,?,?,?)";
 
-        db.run(inventory, [type, make, model, regNumber, fuel, litres, id], function (err){ //executes query with array of values
+        db.run(inventory, [type, make, model, regNumber, fuel, litres,userId], function (err){ //executes query with array of values
 
         if (err){
             console.error("DB error",err.message);
             return res.status(400).json({error:"regNo/SerialNo already exist"}); //key-value_Server error
+            
         }
 
         res.json({message: "Successfully added to inventory!"});
@@ -173,7 +182,6 @@ app.post("/configure",async(req,res) =>{
         }catch (err){
             console.log("error",err);
     }
-    
 
 });
 
@@ -184,7 +192,6 @@ app.post("/store-user-data", auth, (req, res) => {
 
   res.json({ success: true });
 });
-
 
 
 app.listen (PORT,() => {

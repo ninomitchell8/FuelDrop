@@ -28,26 +28,37 @@ function Configure(){
 
     };
 
+    
     const handleSubmit = async (e) =>{
 
+        const token = localStorage.getItem("token");
+
+      
         e.preventDefault()
 
         try{
 
+            console.log("FORM DATA:", formData);
+
+
             const response = await fetch("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/configure",{ 
 
+    
                 method: "POST",
-                headers : {"Content-type": "application/json"},
+                headers : {"Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
                 body: JSON.stringify (formData)
             });
 
             const data = await response.json();
-            console.log("Success",data.message);
-            alert("Success");
-
+           
+            
             if(response.ok){
 
-                navigate("/Home.jsx")
+                navigate("/home.jsx");
+                console.log("JWT:", data.token);
+                alert("Success");
             }
 
         }catch(err) {
@@ -202,7 +213,7 @@ function Configure(){
             <div>
                 <Button
                         type = "submit"
-                        name = "Save to inventory"  
+                        name = "Save to inventory" 
                         />
             </div>
           </form>

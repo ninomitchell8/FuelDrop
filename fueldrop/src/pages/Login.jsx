@@ -31,16 +31,16 @@ function Login() {
             headers:{ "Content-Type": "application/json"},//response data in JSON format
             body: JSON.stringify(formData),//converts JSON data to string format
         });
+        
         const data = await response.json();
-        console.log("Success:", data.message);
-        alert ("success");
-
+     
         if (response.ok){ //boolean value
 
             navigate("/home.jsx");
            
             localStorage.setItem("token", data.token);
             console.log("JWT:", data.token);
+            alert ("success");
         }
 
             }catch (err){

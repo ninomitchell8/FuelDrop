@@ -8,12 +8,7 @@ import Input from "../components/Input.jsx";
 
 function Home(){
 
-    // const [formData, setFormData] = useState({
-    
-    // //         email: "",
-    // //         password: ""
-    
-    //     });
+   
     
     return(
         <div>
