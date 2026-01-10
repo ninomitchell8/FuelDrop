@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import Button from "../components/Button.jsx";
 import Navbar from "../components/Navbar.jsx";
 import Card from "../components/Card.jsx";
@@ -8,7 +8,12 @@ import Input from "../components/Input.jsx";
 
 function Home(){
 
-   
+   const[inventory,setInventory] = useState([]);
+
+   useEffect(( )=> {
+
+    fetch ("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/home")
+   })
     
     return(
         <div>

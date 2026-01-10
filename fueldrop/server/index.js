@@ -143,7 +143,16 @@ app.post('/login',async (req, res) => {
 });
 
 
-app.post ('/home',(req, res) => {
+app.get ('/home',(req, res) => {
+
+    db.colllection("inventory").find({}).toArray((err,inventory) =>{
+
+        if (err){
+            res.status(500).json({error:"dbError"});
+        }else{
+            res.json(inventory);
+        }
+    })
 
 
 });
