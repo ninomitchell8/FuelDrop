@@ -31,7 +31,7 @@ function Configure(){
     
     const handleSubmit = async (e) =>{
 
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("token"); //get token from storage
 
       
         e.preventDefault()

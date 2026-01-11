@@ -143,16 +143,23 @@ app.post('/login',async (req, res) => {
 });
 
 
-app.get ('/home',(req, res) => {
+app.get ('/home',auth, async(req, res) => {
 
-    db.colllection("inventory").find({}).toArray((err,inventory) =>{
 
-        if (err){
-            res.status(500).json({error:"dbError"});
-        }else{
-            res.json(inventory);
-        }
-    })
+    try{
+
+    const userId = req.user.id; //JWT token
+
+    const inventory = db.all(
+
+        "SELECT * FROM inventory WHERE id = ?", [userId]
+    );
+
+    res.json(inventory);
+
+    } catch (err){
+        res.status(500).json({message: "Failed to fetch users inventory"})
+    }
 
 
 });

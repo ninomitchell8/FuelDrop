@@ -4,16 +4,42 @@ import Navbar from "../components/Navbar.jsx";
 import Card from "../components/Card.jsx";
 import Radio from "../components/Radio.jsx";
 import Input from "../components/Input.jsx";
+import SelectCard from "../components/SelectCard.jsx"
 
 
 function Home(){
 
    const[inventory,setInventory] = useState([]);
 
-   useEffect(( )=> {
+   const token = localStorage.getItem("token")
 
-    fetch ("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/home")
-   })
+   useEffect( async (res,req) => {
+
+    try{
+
+        const res = await fetch ("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/home",{
+
+            headers:{
+                Authorization : `Bearer ${token}`
+            },
+        });
+
+        if (!res.ok){
+
+            throw new Error("Http error"); //defined error
+
+        }
+        
+            const data = await res.json();
+
+        setInventory(data);
+
+    }catch (err){
+            console.log("Failed to fetch inventory", err);
+
+    }
+
+});
     
     return(
         <div>
@@ -35,6 +61,8 @@ function Home(){
 
                 <div>
                     <p> Add an item to your Fueldrop inventory before filling up. </p>
+
+                    
 
                     <Button
                     type = "submit"
