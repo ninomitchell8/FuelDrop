@@ -7,39 +7,47 @@ import Input from "../components/Input.jsx";
 import SelectCard from "../components/SelectCard.jsx"
 
 
+
 function Home(){
 
    const[inventory,setInventory] = useState([]);
 
-   const token = localStorage.getItem("token")
+   const token = localStorage.getItem("token");
 
-   useEffect( async (res,req) => {
+   useEffect( () => { //not allowed to make async
 
-    try{
+    const fetchData = async() => {
 
-        const res = await fetch ("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/home",{
+        try{
 
-            headers:{
-                Authorization : `Bearer ${token}`
-            },
-        });
+            const res = await fetch ("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/home",{
 
-        if (!res.ok){
+                headers:{
+                    Authorization : `Bearer ${token}`
+                },
+            
+            });
 
-            throw new Error("Http error"); //defined error
+            if (!res.ok){
 
-        }
-        
+                throw new Error("Http error"); //defined error
+
+            }
+            
             const data = await res.json();
 
-        setInventory(data);
+            setInventory(data);
 
-    }catch (err){
-            console.log("Failed to fetch inventory", err);
+            }catch (err){
+                console.log("Failed to fetch inventory", err);
 
-    }
+            }
+       };
+    
+        fetchData(); //manual run
+    
+},[]);
 
-});
     
     return(
         <div>
@@ -61,6 +69,17 @@ function Home(){
 
                 <div>
                     <p> Add an item to your Fueldrop inventory before filling up. </p>
+
+                <div>
+                    
+                    <SelectCard                    
+                    header = {inventory.regNumber}
+                    title = {inventory.make}
+                    text = {inventory.model}
+                    btnName ="Add to fueling queue"
+                    />
+
+                </div>
 
                     
 

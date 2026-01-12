@@ -19,7 +19,6 @@ function Configure(){
             litres: ""   
         });
 
-    const navigate = useNavigate();
 
 
     const handleChange = async (e) => {
@@ -32,6 +31,8 @@ function Configure(){
     const handleSubmit = async (e) =>{
 
         const token = localStorage.getItem("token"); //get token from storage
+
+        const navigate = useNavigate();
 
       
         e.preventDefault()

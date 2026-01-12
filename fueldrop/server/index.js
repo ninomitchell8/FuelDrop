@@ -143,7 +143,7 @@ app.post('/login',async (req, res) => {
 });
 
 
-app.get ('/home',auth, async(req, res) => {
+app.post ('/home',auth, async(req, res) => {
 
 
     try{
