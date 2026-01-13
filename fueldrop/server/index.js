@@ -84,9 +84,6 @@ app.post ('/register',async (req, res) => {
 
 });
 
-
-
-
 app.post('/login',async (req, res) => {
 
     const {email, password} = req.body;
@@ -143,17 +140,17 @@ app.post('/login',async (req, res) => {
 });
 
 
-app.post ('/home',auth, async(req, res) => {
+app.get('/home',auth, async(req, res) => {
 
 
     try{
 
     const userId = req.user.id; //JWT token
 
-    const inventory = db.all(
+    const inventory = await db.all(
 
         "SELECT * FROM inventory WHERE id = ?", [userId]
-    );
+    ); // function returns promise = await
 
     res.json(inventory);
 

@@ -22,9 +22,9 @@ function Home(){
 
             const res = await fetch ("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/home",{
 
-                headers:{
-                    Authorization : `Bearer ${token}`
-                },
+                headers:{                 
+                    "Authorization" : `Bearer ${token}`
+                }
             
             });
 
@@ -44,9 +44,10 @@ function Home(){
             }
        };
     
-        fetchData(); //manual run
+    fetchData(); //manual run
     
 },[]);
+
 
     
     return(
@@ -62,27 +63,31 @@ function Home(){
                         secondaryContent = ""/>
 
                     <Card
-                    cardHeader = "Diesel - 50ppm"
-                    primaryContent = "R19.20/Litre"
-                    secondaryContent = ""/>
-                <div/>
+                        cardHeader = "Diesel - 50ppm"
+                        primaryContent = "R19.20/Litre"
+                        secondaryContent = ""/>
+                </div>
 
                 <div>
                     <p> Add an item to your Fueldrop inventory before filling up. </p>
-
+                </div>
+                
                 <div>
-                    
-                    <SelectCard                    
-                    header = {inventory.regNumber}
-                    title = {inventory.make}
-                    text = {inventory.model}
-                    btnName ="Add to fueling queue"
-                    />
-
+                
+                {Array.isArray(inventory) && inventory.map (item =>( //Only render list if its an array - defensive render_map for ea item return componernt
+                    <SelectCard 
+                        key = {item.id}                   
+                        header = {item.regNumber}
+                        title = {item.make}
+                        text = {item.model}
+                        btnName ="Add to fueling queue"
+                    /> 
+                ))}  
+                
                 </div>
 
                     
-
+                <div>
                     <Button
                     type = "submit"
                     name = "+ Add Item"
@@ -97,12 +102,12 @@ function Home(){
                         name = "Share Location"/>     
                 </div>
                         
-                </div>        
+                <div>        
                     <Button 
                     type = "submit"
                     name = "Fill Up"/>
                 </div>
-         
+         </div>
     );
 }
 

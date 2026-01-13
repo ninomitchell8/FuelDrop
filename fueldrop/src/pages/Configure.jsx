@@ -9,6 +9,8 @@ import {useNavigate} from "react-router-dom";
 
 function Configure(){
 
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
     
             type: "",
@@ -32,9 +34,7 @@ function Configure(){
 
         const token = localStorage.getItem("token"); //get token from storage
 
-        const navigate = useNavigate();
-
-      
+        
         e.preventDefault()
 
         try{
@@ -58,7 +58,6 @@ function Configure(){
             if(response.ok){
 
                 navigate("/home.jsx");
-                console.log("JWT:", data.token);
                 alert("Success");
             }
 
@@ -214,7 +213,7 @@ function Configure(){
             <div>
                 <Button
                         type = "submit"
-                        name = "Save to inventory" 
+                        name = "Save to inventory"
                         />
             </div>
           </form>
