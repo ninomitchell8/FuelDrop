@@ -140,26 +140,22 @@ app.post('/login',async (req, res) => {
 });
 
 
-app.get('/home',auth, async(req, res) => {
+app.get('/home', auth, (req, res) => {
+  const user_id = req.user.id;
 
+    db.all(
+        "SELECT * FROM inventory WHERE user_id = ?",
+        [user_id],
+        (err, rows) => {
+        if (err) {
+            console.error("DB error:", err.message);
+            return res.status(500).json([]); // send empty array on error
+        }
+        res.json(rows || []); // send actual rows
+        }
+    );
+    });
 
-    try{
-
-    const userId = req.user.id; //JWT token
-
-    const inventory = await db.all(
-
-        "SELECT * FROM inventory WHERE id = ?", [userId]
-    ); // function returns promise = await
-
-    res.json(inventory);
-
-    } catch (err){
-        res.status(500).json({message: "Failed to fetch users inventory"})
-    }
-
-
-});
 
 
 
@@ -174,14 +170,14 @@ app.post("/configure",auth,async(req,res) =>{
 
     }
 
-    const userId = req.user.id;
+    const user_id = req.user.id;
 
 
     try{
 
-        const inventory = "INSERT INTO inventory (type, make, model, regNumber, fuel, litres,id) VALUES(?,?,?,?,?,?,?)";
+        const inventory = "INSERT INTO inventory (type, make, model, regNumber, fuel, litres,user_id) VALUES(?,?,?,?,?,?,?)";
 
-        db.run(inventory, [type, make, model, regNumber, fuel, litres,userId], function (err){ //executes query with array of values
+        db.run(inventory, [type, make, model, regNumber, fuel, litres,user_id], function (err){ //executes query with array of values
 
         if (err){
             console.error("DB error",err.message);
@@ -195,6 +191,9 @@ app.post("/configure",auth,async(req,res) =>{
         }catch (err){
             console.log("error",err);
     }
+
+        console.log("USER ID:", req.user.id);
+        console.log("FORM DATA:", req.body);
 
 });
 

@@ -36,7 +36,9 @@ function Home(){
             
             const data = await res.json();
 
-            setInventory(data);
+            console.log("RAW /home response:", data);
+
+            setInventory(data.inventory);
 
             }catch (err){
                 console.log("Failed to fetch inventory", err);
@@ -73,16 +75,17 @@ function Home(){
                 </div>
                 
                 <div>
-                
-                {Array.isArray(inventory) && inventory.map (item =>( //Only render list if its an array - defensive render_map for ea item return componernt
-                    <SelectCard 
-                        key = {item.id}                   
-                        header = {item.regNumber}
-                        title = {item.make}
-                        text = {item.model}
-                        btnName ="Add to fueling queue"
-                    /> 
-                ))}  
+                    
+                        {Array.isArray(inventory) && inventory.map (item =>( //Only render list if its an array - defensive render_map for ea item return componernt
+                            <SelectCard
+                                key = {item.inventory_id}               
+                                header = {item.regNumber}
+                                title = {item.make}
+                                text = {item.model}
+                                btnName ="Add to fueling queue"
+                            /> 
+                        ))}  
+                    
                 
                 </div>
 

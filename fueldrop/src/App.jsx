@@ -12,12 +12,11 @@ function App() {
   return (
       <Router>
         <Routes>
-          <Route path = "/" element = {<Landing />}/>
+          <Route path = "/" element = { <Landing/>}/>
           <Route path ="/Register.jsx" element = {<Register />}/>
           <Route path ="/Login.jsx" element = {<Login />}/>
           <Route path = "/Home.jsx" element = {<Home />}/>
           <Route path = "/Configure.jsx" element = {<Configure />}/> 
-
         </Routes>
       </Router>
   )
