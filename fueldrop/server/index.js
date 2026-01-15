@@ -141,12 +141,13 @@ app.post('/login',async (req, res) => {
 
 
 app.get('/home', auth, (req, res) => {
+
   const user_id = req.user.id;
 
     db.all(
         "SELECT * FROM inventory WHERE user_id = ?",
         [user_id],
-        (err, rows) => {
+        (err, rows) => { //rows = var name of results -naturally array format
         if (err) {
             console.error("DB error:", err.message);
             return res.status(500).json([]); // send empty array on error
