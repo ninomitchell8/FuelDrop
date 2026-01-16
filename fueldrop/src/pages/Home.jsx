@@ -11,6 +11,8 @@ import SelectCard from "../components/SelectCard.jsx"
 function Home(){
 
    const[inventory,setInventory] = useState([]);
+ 
+   const [loading,setLoading] = useState([true]);
 
    const token = localStorage.getItem("token");
 
@@ -26,19 +28,22 @@ function Home(){
                     "Authorization" : `Bearer ${token}`
                 }
             
-            });
+            })
+
+            .then (res => res.json())
+            .then(data =>{
+
+                console.log(data);
+                setInventory(Array.isArray(data) ? data: []);// ? = if array = true = data_ else = []
+                setLoading(false);  
+            })
 
             if (!res.ok){
 
                 throw new Error("Http error"); //defined error
 
             }
-            
-            const data = await res.json();
-
             console.log("RAW /home response:", data);
-
-            setInventory(data.inventory);
 
             }catch (err){
                 console.log("Failed to fetch inventory", err);
@@ -75,14 +80,17 @@ function Home(){
                 </div>
                 
                 <div>
-                    
                         {Array.isArray(inventory) && inventory.map (item =>( //Only render list if its an array - defensive render_map for ea item return componernt
                             <SelectCard
                                 key = {item.inventory_id}               
                                 header = {item.regNumber}
-                                title = {item.make}
-                                text = {item.model}
-                                btnName ="Add to fueling queue"
+                                title1 = {item.make}
+                                title2 = {item.model}
+                                title3 = {item.type}
+                                text1 = {item.fuel}
+                                text2 = {item.litres}                                
+                                btnName1 ="Add to fueling queue"
+                                btnName2 = "Remove Item"
                             /> 
                         ))}  
                     
