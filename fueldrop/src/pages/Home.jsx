@@ -10,9 +10,13 @@ import SelectCard from "../components/SelectCard.jsx"
 
 function Home(){
 
-   const[inventory,setInventory] = useState([]);
+   const[inventory,setInventory] = useState([]); // retrieve data from db
  
-   const [loading,setLoading] = useState([true]);
+   const [loading,setLoading] = useState([true]); // load inventory on opening of Home
+
+   const [selectedItems,setSelectedItems] = useState ([]); // select button
+
+
 
    const token = localStorage.getItem("token");
 
@@ -50,8 +54,29 @@ function Home(){
 
             }
        };
+
+       const toggleSelect = (item) => {
+
+        setSelectedItems (prev =>{ //previous state  - component state before update applied
+
+            const exists = prev.find (i=> i.inventory_id == item.inventory_id); //loops through current selected items(prev)_tries to find item with same inventory
+
+            if (exists){
+                
+                return prev.filter ( //creates new array except item removed
+
+                    i =>i.inventory_id !== i.item_id
+                );
+            }else{
+
+                return [...prev,item] //spread operator - copy all selected items  add new item to end
+            }
+        }) //prev latest state
+       }
     
     fetchData(); //manual run
+
+
     
 },[]);
 
@@ -88,9 +113,11 @@ function Home(){
                                 title2 = {item.model}
                                 title3 = {item.type}
                                 text1 = {item.fuel}
-                                text2 = {item.litres}                                
-                                btnName1 ="Add to fueling queue"
-                                btnName2 = "Remove Item"
+                                text2 = {item.litres} 
+                                isSelected = {selectedItems.some(
+                                    i => i.invenetory_id === item.inventory_id
+                                )}                          
+                                onToggleSelect = {toggleSelect}
                             /> 
                         ))}  
                     
