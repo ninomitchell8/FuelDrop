@@ -20,6 +20,61 @@ function Home(){
 
    const token = localStorage.getItem("token");
 
+   const toggleSelect = (item) => {
+
+        setSelectedItems (prev =>{ //previous state  - component state before update applied
+
+            const exists = prev.find (
+                
+                i=> i.inventory_id == item.inventory_id); //loops through current selected items(prev)_tries to find item with same inventory
+
+            if (exists){
+                
+                return prev.filter ( //creates new array except item removed
+
+                    i => i.inventory_id !== item.inventory_id
+                );
+            }else{
+
+                return [...prev,item] //spread operator - copy all selected items  add new item to end
+            }
+        }) //prev latest state
+       }
+
+       const removeInventoryItem = async (id) => {
+
+        try{
+
+            const res = await fetch(
+
+                `https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/inventory/${id}`,
+
+                {
+                    method : "DELETE",
+                    headers : {
+
+                        "Authorization": `Bearer ${token}`
+                    }
+                }
+
+            );
+
+            if (!res.ok) throw new Error("Failed to delete");
+            
+            setInventory(prev =>
+                prev.filter(item => item.inventory_id !==id)
+            );
+
+            setSelectedItems (prev =>
+                prev.filter(item => item.inventory_id !== id)
+            );
+
+            
+        }catch (err){
+            console.log(err);
+        }
+    };
+
    useEffect( () => { //not allowed to make async
 
     const fetchData = async() => {
@@ -34,19 +89,21 @@ function Home(){
             
             })
 
-            .then (res => res.json())
-            .then(data =>{
-
-                console.log(data);
-                setInventory(Array.isArray(data) ? data: []);// ? = if array = true = data_ else = []
-                setLoading(false);  
-            })
-
             if (!res.ok){
 
                 throw new Error("Http error"); //defined error
 
             }
+
+            // .then (res => res.json())
+            // .then(data =>{
+                const data = await res.json();
+                console.log(data);
+                setInventory(Array.isArray(data) ? data: []);// ? = if array = true = data_ else = []
+                setLoading(false);  
+            // })
+
+            
             console.log("RAW /home response:", data);
 
             }catch (err){
@@ -55,28 +112,8 @@ function Home(){
             }
        };
 
-       const toggleSelect = (item) => {
 
-        setSelectedItems (prev =>{ //previous state  - component state before update applied
-
-            const exists = prev.find (i=> i.inventory_id == item.inventory_id); //loops through current selected items(prev)_tries to find item with same inventory
-
-            if (exists){
-                
-                return prev.filter ( //creates new array except item removed
-
-                    i =>i.inventory_id !== i.item_id
-                );
-            }else{
-
-                return [...prev,item] //spread operator - copy all selected items  add new item to end
-            }
-        }) //prev latest state
-       }
-    
     fetchData(); //manual run
-
-
     
 },[]);
 
@@ -108,16 +145,13 @@ function Home(){
                         {Array.isArray(inventory) && inventory.map (item =>( //Only render list if its an array - defensive render_map for ea item return componernt
                             <SelectCard
                                 key = {item.inventory_id}               
-                                header = {item.regNumber}
-                                title1 = {item.make}
-                                title2 = {item.model}
-                                title3 = {item.type}
-                                text1 = {item.fuel}
-                                text2 = {item.litres} 
+                                item = {item} 
                                 isSelected = {selectedItems.some(
-                                    i => i.invenetory_id === item.inventory_id
-                                )}                          
-                                onToggleSelect = {toggleSelect}
+                                    i => i.inventory_id === item.inventory_id
+                                )} 
+
+                                onToggleSelect = {() => toggleSelect(item)}
+                                onRemove ={() => removeInventoryItem(item.inventory_id)}
                             /> 
                         ))}  
                     

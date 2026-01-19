@@ -6,8 +6,17 @@ function Button(props){
 
     const navigate = useNavigate() //navigate's a function
 
+    const handleClick = () => {
+        if (props.to) {
+            navigate(props.to);
+        } else if (props.onClick) {
+            props.onClick();   // 👈 EXECUTE IT
+        }
+    }
+
+
     return(
-        <button type={props.type} className="btn" onClick = {() => props.to ? navigate(props.to):props.onClick}>{props.name}</button>
+        <button type={props.type} className="btn" onClick = {handleClick}>{props.name}</button>
     );
 }
 

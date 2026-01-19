@@ -1,7 +1,13 @@
 import "./SelectCard.css";
 import Button from "../components/Button.jsx";
 
-function SelectCard(props){
+function SelectCard({ item, isSelected, onToggleSelect, onRemove  }){
+
+    const handleClick = () => {
+    console.log("BUTTON CLICKED", item.inventory_id);
+    onToggleSelect();
+};
+
 
         return(
 
@@ -13,22 +19,29 @@ function SelectCard(props){
             }}
         >
         <div className="card-header">
-           <p> Registration / Serial Number - {props.header} </p>
+           <p> Registration / Serial Number - {item.regNumber} </p>
         </div>
+        
         <div className="card-body">
-            <h5 className="card-title">{props.title1} - {props.title2}</h5>
-            <h5 className="card-title">{props.title3}</h5>
-            <p className="card-text">{props.text1}  </p>
-            <p className="card-text">{props.text2}  = {props.price} </p>
+            <h5 className="card-title">{item.make} - {item.model}</h5>
+            <h5 className="card-title">{item.type}</h5>
+            <p className="card-text">{item.fuel}  </p>
+            <p className="card-text">{item.litres} </p>
             <Button
+                type = "button"
                 name={isSelected ? "Remove from queue" : "Add to fueling queue"}
-                onClick={() => onToggleSelect(item)}
+                onClick={handleClick}
+            />
+            <Button 
+            type = "button"
+            name = "Delete from inventory"
+            onClick= {onRemove}
             />
          
-
         </div>
     </div>
         
+
         )
 
     }

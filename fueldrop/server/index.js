@@ -157,6 +157,30 @@ app.get('/home', auth, (req, res) => {
     );
     });
 
+    app.delete("/inventory/:id", auth, async (req, res) => {
+  const { id } = req.params; // get ID from URL
+  try {
+    const db = await dbPromise;
+
+    // Optional: check if the item belongs to the user
+    const item = await db.get(
+      "SELECT * FROM inventory WHERE inventory_id = ? AND user_id = ?",
+      [id, req.user.id]
+    );
+
+    if (!item) {
+      return res.status(404).json({ error: "Item not found" });
+    }
+
+    await db.run("DELETE FROM inventory WHERE inventory_id = ?", [id]);
+    res.json({ message: "Item deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to delete item" });
+  }
+});
+
+
 
 
 
