@@ -157,32 +157,51 @@ app.get('/home', auth, (req, res) => {
     );
     });
 
-    app.delete("/inventory/:id", auth, async (req, res) => {
-  const { id } = req.params; // get ID from URL
-  try {
-    const db = await dbPromise;
-
+app.delete("/inventory/:id", auth, async (req, res) => {
+  
+    const { id } = req.params; // get ID from URL
+    const user_id = req.user.id;
+  
+ 
     // Optional: check if the item belongs to the user
-    const item = await db.get(
-      "SELECT * FROM inventory WHERE inventory_id = ? AND user_id = ?",
-      [id, req.user.id]
-    );
+        db.get(
+            "SELECT * FROM inventory WHERE inventory_id = ? AND user_id = ?",
+            
+            [id, user_id],
+            
+            (err, item) => {
 
-    if (!item) {
-      return res.status(404).json({ error: "Item not found" });
-    }
+                if(err){
+                    console.log("DB error:",err.message);
+                    return res.status(500).json({error : "DB error"});
+                }
+            
 
-    await db.run("DELETE FROM inventory WHERE inventory_id = ?", [id]);
-    res.json({ message: "Item deleted successfully" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to delete item" });
-  }
+            if (!item) {
+                return res.status(404).json({ error: "Item not found" });
+            }
+
+            db.run(
+                
+                "DELETE FROM inventory WHERE inventory_id = ?", [id],
+            
+                function (err){
+                    
+                    if (err){
+
+                        console.error("Delete error",err.message);
+                        return res.status(500).json({ error: "Failed to delete item" });
+                    }
+                    
+                    res.json({ message: "Item deleted successfully" });
+
+                }
+                
+             );
+
+            }
+        );
 });
-
-
-
-
 
 
 app.post("/configure",auth,async(req,res) =>{

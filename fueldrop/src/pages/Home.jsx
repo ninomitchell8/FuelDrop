@@ -47,17 +47,15 @@ function Home(){
 
             const res = await fetch(
 
-                `https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/inventory/${id}`,
-
-                {
+                `https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/inventory/${id}`,{
                     method : "DELETE",
                     headers : {
 
-                        "Authorization": `Bearer ${token}`
+                        "Authorization" : `Bearer ${token}`
                     }
                 }
 
-            );
+            )
 
             if (!res.ok) throw new Error("Failed to delete");
             
@@ -125,7 +123,7 @@ function Home(){
             <Navbar />
                 <h3> Ready to fill up?</h3>
         
-                <div>
+                <div className ="fuel">
                     <Card 
                         cardHeader  = "Petrol - 95 Unleaded"
                         primaryContent =  "R21.12/Litre"
