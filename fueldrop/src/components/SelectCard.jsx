@@ -32,8 +32,7 @@ function SelectCard({ item, isSelected, onToggleSelect, onRemove  }){
                 name={isSelected ? "Remove from queue" : "Add to fueling queue"}
                 onClick={handleClick}
             />
-            <Button 
-            
+            <Button             
             type = "button"
             name = "Delete from inventory"
             onClick= {onRemove}
