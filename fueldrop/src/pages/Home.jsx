@@ -16,6 +16,8 @@ function Home(){
 
    const [selectedItems,setSelectedItems] = useState ([]); // select button
 
+   const [location,setLocation] = useState ([null]);
+
 
 
    const token = localStorage.getItem("token");
@@ -41,7 +43,7 @@ function Home(){
         }) //prev latest state
        }
 
-       const removeInventoryItem = async (id) => {
+       const removeInventoryItem = async (id) => { 
 
         try{
 
@@ -73,6 +75,38 @@ function Home(){
         }
     };
 
+ 
+
+    const getLocation = ()=> {
+
+            
+
+           if ( !navigator.geolocation){
+
+            console.log("GEolocation not supported");
+            return;
+           }navigator.geolocation.getCurrentPosition(
+            (position)=>{
+
+                const coords = {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                };
+
+                setLocation(coords);
+                console.log("Location", coords);
+            },
+            
+            (error) => {
+
+                console.log("Location error:", error.message);
+            }
+        );                    
+    };
+
+
+
+
    useEffect( () => { //not allowed to make async
 
     const fetchData = async() => {
@@ -93,8 +127,6 @@ function Home(){
 
             }
 
-            // .then (res => res.json())
-            // .then(data =>{
                 const data = await res.json();
                 console.log(data);
                 setInventory(Array.isArray(data) ? data: []);// ? = if array = true = data_ else = []
@@ -169,7 +201,8 @@ function Home(){
                     <h4>Location</h4>
                     <Button                
                         type = "submit"
-                        name = "Share Location"/>     
+                        name = "Share Location"
+                        onClick = { getLocation }/>     
                 </div>
                         
                 <div>        
