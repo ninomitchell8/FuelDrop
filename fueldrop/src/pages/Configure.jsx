@@ -35,7 +35,7 @@ function Configure(){
         const token = localStorage.getItem("token"); //get token from storage
 
         
-        e.preventDefault()
+        e.preventDefault() 
 
         try{
 

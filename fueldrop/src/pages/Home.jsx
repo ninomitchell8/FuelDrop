@@ -18,6 +18,14 @@ function Home(){
 
    const [location,setLocation] = useState ([null]);
 
+   const [order,setOrder] = useState({
+
+    fuel : "",
+    litres: "",
+    latitude: "",
+    longitude: ""
+});
+
 
 
    const token = localStorage.getItem("token");
@@ -52,7 +60,6 @@ function Home(){
                 `https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/inventory/${id}`,{
                     method : "DELETE",
                     headers : {
-
                         "Authorization" : `Bearer ${token}`
                     }
                 }
@@ -75,23 +82,41 @@ function Home(){
         }
     };
 
+    const totalFuel = ()=>{
+
+        let diesel = 0;
+        let petrol = 0;
+
+        selectedItems.forEach = (item  =>{
+
+        if (item.fuel === "diesel"){
+
+            diesel += Number(item.litres); // converts litres tro numbers and adds it up
+        }else if (item.fuel === "petrol"){
+
+            petrol += Number(item.litres)
+        }
+
+        });
+
+        return {diesel, petrol};
+    };
+
  
 
     const getLocation = ()=> {
 
-            
-
            if ( !navigator.geolocation){
 
-            console.log("GEolocation not supported");
+            console.log("Geolocation not supported");
             return;
            }navigator.geolocation.getCurrentPosition(
             (position)=>{
 
-                const coords = {
+                resolve ({
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
-                };
+                });
 
                 setLocation(coords);
                 console.log("Location", coords);
@@ -99,13 +124,65 @@ function Home(){
             
             (error) => {
 
-                console.log("Location error:", error.message);
+                console.log("Location error:", error.message); 
             }
         );                    
     };
 
+    const handleSubmit = async (e) =>{
+
+        const token = localStorage.getItem("token"); //get token from storage
+
+        e.preventDefault() 
 
 
+        try{
+
+            const coords = await getLocation();
+
+            setLocation(coords);
+
+            const {diesel, petrol} = totalFuel();
+
+            const order = {
+
+                diesel_litres : diesel,
+                petrol_litres : petrol,
+                latitude : coords.latitude,
+                longitude : coords.longitude
+            };
+
+            console.log("ORDER:", order);
+
+
+            const response = await fetch("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/orders",{ 
+
+    
+                method: "POST",
+                headers : {"Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify (order)
+            });
+
+            const data = await response.json();
+           
+            
+            if(response.ok){
+
+                navigate("/home.jsx");
+                alert("Success");
+            }
+
+        }catch(err) {
+
+                    alert(err.message);
+                }
+
+        
+
+
+    };
 
    useEffect( () => { //not allowed to make async
 
@@ -170,7 +247,7 @@ function Home(){
                 <div>
                     <p> Add an item to your Fueldrop inventory before filling up. </p>
                 </div>
-                
+               <form onSubmit={handleSubmit}>
                 <div>
                         {Array.isArray(inventory) && inventory.map (item =>( //Only render list if its an array - defensive render_map for ea item return componernt
                             <SelectCard
@@ -185,10 +262,18 @@ function Home(){
                             /> 
                         ))}  
                     
-                
                 </div>
 
-                    
+                <div>
+                    <h4>Location</h4>
+                    <Button                
+                        type = "submit"
+                        name = "Share Location"
+                        onClick = { getLocation }/>     
+                </div>
+
+            </form> 
+
                 <div>
                     <Button
                     type = "submit"
@@ -197,19 +282,6 @@ function Home(){
 
                 </div>
                     
-                <div>
-                    <h4>Location</h4>
-                    <Button                
-                        type = "submit"
-                        name = "Share Location"
-                        onClick = { getLocation }/>     
-                </div>
-                        
-                <div>        
-                    <Button 
-                    type = "submit"
-                    name = "Fill Up"/>
-                </div>
          </div>
     );
 }

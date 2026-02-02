@@ -246,6 +246,39 @@ app.post("/configure",auth,async(req,res) =>{
 
 });
 
+app.post ("/orders",auth, async(req,res)=>{
+
+    const {diesel_litres,petrol_litres,latitude, longitude} = req.body;
+
+    if( !diesel_litres | !petrol_litres| !latitude |!longitude) {
+
+        return res.status(400).json({error: "All fields required"});
+    }
+
+
+    const user_id = req.user.id;
+
+    const order = "INSERT INTO orders (user_id, diesel_litres, petrol_litres, latitude, longitude) VALUES (?, ?, ?, ?, ?)"
+
+    db.run ( order, [user_id, diesel_litres, petrol_litres, latitude, longitude],
+
+        function(err){
+
+            if (err){
+                console.log("Order DB error",err.message);
+                return res.status(500).json({error: "Order creation failed"})
+            }
+
+            res.json({
+                message: "order created",
+                order_id : this.lastID,
+          })
+        }
+    )
+
+    
+})
+
 app.post("/store-user-data", auth, (req, res) => {
 
   console.log("AUTH USER:", req.user);
