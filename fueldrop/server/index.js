@@ -24,9 +24,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
 
-
-
-
 function auth(req, res, next) {
   const authHeader = req.headers.authorization;
 
@@ -159,8 +156,9 @@ app.get('/home', auth, (req, res) => {
         }
         res.json(rows || []); // send actual rows
         }
+
     );
-    });
+});
 
 app.delete("/inventory/:id", auth, async (req, res) => {
   
@@ -211,7 +209,7 @@ app.delete("/inventory/:id", auth, async (req, res) => {
 
 app.post("/configure",auth,async(req,res) =>{
 
-    const { type,make,model,regNumber,fuel,litres} = req.body
+    const { type, make, model, regNumber, fuel, litres} = req.body
 
     if (!type || !make || !model || !regNumber || !fuel || !litres){
 
@@ -220,7 +218,6 @@ app.post("/configure",auth,async(req,res) =>{
     }
 
     const user_id = req.user.id;
-
 
     try{
 
@@ -248,36 +245,84 @@ app.post("/configure",auth,async(req,res) =>{
 
 app.post ("/orders",auth, async(req,res)=>{
 
-    const {diesel_litres,petrol_litres,latitude, longitude} = req.body;
+    const dieselPrice = 19.46;
 
-    if( !diesel_litres | !petrol_litres| !latitude |!longitude) {
+    const petrolPrice = 19.28;
+
+    const deliveryFee = 150;
+
+    const {items,latitude, longitude} = req.body;
+
+    let processedItems = [];
+
+    let totalItemPrice = 0;
+
+    let totalPrice = 0;
+
+    const user_id = req.user.id;
+
+    if( !items|| !latitude ||!longitude) {
 
         return res.status(400).json({error: "All fields required"});
     }
 
+        const ids = items.map( item => item.inventory_id);
 
-    const user_id = req.user.id;
+        const placeholder = ids.map(() => "?").join(",");
 
-    const order = "INSERT INTO orders (user_id, diesel_litres, petrol_litres, latitude, longitude) VALUES (?, ?, ?, ?, ?)"
+        const results =  db.all (
+            "SELECT inventory_id, make, model, regNumber, fuel, litres FROM inventory WHERE inventory_id=? AND user_id =?",
+            [items.inventory_id, user_id]
+        );
 
-    db.run ( order, [user_id, diesel_litres, petrol_litres, latitude, longitude],
+        const inv = results.rows[0];
 
-        function(err){
+        if (!inv){
 
-            if (err){
-                console.log("Order DB error",err.message);
-                return res.status(500).json({error: "Order creation failed"})
-            }
-
-            res.json({
-                message: "order created",
-                order_id : this.lastID,
-          })
+            return res.status (404).json({error: "Inventory non existent"});
         }
-    )
+    
+        const unitPrice = inv.fuel === "diesel"? dieselPrice : petrolPrice;
+
+        const itemPrice = unitPrice * inv.litres;
+
+        totalItemPrice += itemPrice;
+        
+        totalPrice = totalItemPrice + deliveryFee;//adds up all the item prices
+
+        processedItems.push({
+
+            inventory_id: inv.inventory_id,
+            make: inv.make,
+            model: inv.model,
+            regNumber: inv.regNumber,
+            unit_price: unitPrice,
+            item_price: itemPrice,
+            deliveryFee: deliveryFee
+        });
 
     
-})
+           
+       db.run("INSERT INTO orders (user_id, totalPrice, latitude, longitude) VALUES (?, ?, ?, ?)", [user_id, totalPrice, latitude, longitude],
+
+        function(err){
+            console.log(err,"DB Insertion unseccuesful");                       
+       });
+    
+        let invoice = 
+    
+                    res.status(201).json({
+                    order_id: orderResult.rows[0].id,
+                    items: processedItems,
+                    total_price: totalPrice,
+                    latitude:latitude,
+                    longitude: longitude
+                })
+
+                console.log(invoice);
+    });
+
+
 
 app.post("/store-user-data", auth, (req, res) => {
 

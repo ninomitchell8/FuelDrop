@@ -16,7 +16,7 @@ function Home(){
 
    const [selectedItems,setSelectedItems] = useState ([]); // select button
 
-   const [location,setLocation] = useState ([null]);
+   const [location,setLocation] = useState ([null]); //intial state no valid data = null
 
    const [order,setOrder] = useState({
 
@@ -81,53 +81,35 @@ function Home(){
             console.log(err);
         }
     };
-
-    const totalFuel = ()=>{
-
-        let diesel = 0;
-        let petrol = 0;
-
-        selectedItems.forEach = (item  =>{
-
-        if (item.fuel === "diesel"){
-
-            diesel += Number(item.litres); // converts litres tro numbers and adds it up
-        }else if (item.fuel === "petrol"){
-
-            petrol += Number(item.litres)
-        }
-
-        });
-
-        return {diesel, petrol};
-    };
-
- 
-
+  
     const getLocation = ()=> {
 
-           if ( !navigator.geolocation){
+        return new Promise((resolve, reject) => {
 
-            console.log("Geolocation not supported");
+           if (!navigator.geolocation){
+
+            reject(new Error("Geolocation not supported"));
+            
             return;
-           }navigator.geolocation.getCurrentPosition(
-            (position)=>{
+           }
+           
+           navigator.geolocation.getCurrentPosition(
+            (position) => {
 
-                resolve ({
+                resolve({
+                    
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
                 });
-
-                setLocation(coords);
-                console.log("Location", coords);
             },
             
             (error) => {
 
-                console.log("Location error:", error.message); 
+                reject(new Error( error.message)); 
             }
-        );                    
-    };
+           );
+    });
+};
 
     const handleSubmit = async (e) =>{
 
@@ -135,27 +117,33 @@ function Home(){
 
         e.preventDefault() 
 
-
         try{
 
             const coords = await getLocation();
 
-            setLocation(coords);
+            if (!coords || !coords.latitude || !coords.longitude){
 
-            const {diesel, petrol} = totalFuel();
+                alert ("Location not found!")
+
+                return;
+            }
 
             const order = {
 
-                diesel_litres : diesel,
-                petrol_litres : petrol,
+            items: selectedItems.map( item =>({
+
+                inventory_id: item.inventory_id,
+                
+                })),
                 latitude : coords.latitude,
                 longitude : coords.longitude
+
             };
 
             console.log("ORDER:", order);
 
 
-            const response = await fetch("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/orders",{ 
+            const response = await fetch("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/orders",{ //sends order to backend
 
     
                 method: "POST",
@@ -164,8 +152,6 @@ function Home(){
                 },
                 body: JSON.stringify (order)
             });
-
-            const data = await response.json();
            
             
             if(response.ok){
@@ -178,9 +164,6 @@ function Home(){
 
                     alert(err.message);
                 }
-
-        
-
 
     };
 
@@ -208,7 +191,7 @@ function Home(){
                 console.log(data);
                 setInventory(Array.isArray(data) ? data: []);// ? = if array = true = data_ else = []
                 setLoading(false);  
-            // })
+            
 
             
             console.log("RAW /home response:", data);
@@ -235,12 +218,12 @@ function Home(){
                 <div className ="fuel">
                     <Card 
                         cardHeader  = "Petrol - 95 Unleaded"
-                        primaryContent =  "R21.12/Litre"
+                        primaryContent =  "R19.28/Litre"
                         secondaryContent = ""/>
 
                     <Card
                         cardHeader = "Diesel - 50ppm"
-                        primaryContent = "R19.20/Litre"
+                        primaryContent = "R19.46/Litre"
                         secondaryContent = ""/>
                 </div>
 
@@ -253,7 +236,7 @@ function Home(){
                             <SelectCard
                                 key = {item.inventory_id}               
                                 item = {item} 
-                                isSelected = {selectedItems.some(
+                                isSelected = {selectedItems.some( //. some test if atleast 1 element in array //is.select boolean value
                                     i => i.inventory_id === item.inventory_id
                                 )} 
 
@@ -269,7 +252,7 @@ function Home(){
                     <Button                
                         type = "submit"
                         name = "Share Location"
-                        onClick = { getLocation }/>     
+                        />     
                 </div>
 
             </form> 
