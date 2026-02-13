@@ -243,7 +243,7 @@ app.post("/configure",auth,async(req,res) =>{
 
 });
 
-app.post ("/orders",auth, async(req,res)=>{
+app.post ("/invoice",auth, async(req,res)=>{
 
     const dieselPrice = 19.46;
 
@@ -263,64 +263,76 @@ app.post ("/orders",auth, async(req,res)=>{
 
     if( !items|| !latitude ||!longitude) {
 
-        return res.status(400).json({error: "All fields required"});
+            return res.status(400).json({error: "All fields required"});
+        }
+
+
+
+    try{
+
+        for (const item of items){
+
+        }
+        
+            const inv =  db.get (
+                "SELECT inventory_id, make, model, regNumber, fuel, litres FROM inventory WHERE inventory_id=? AND user_id =?",
+                [items.inventory_id, user_id]
+            );
+
+
+            if (!inv){
+
+                return res.status (404).json({error: "Inventory non existent"});
+            }
+        
+            const unitPrice = inv.fuel === "diesel"? dieselPrice : petrolPrice;
+
+            const itemPrice = unitPrice * inv.litres;
+
+            totalItemPrice += itemPrice;
+            
+            totalPrice = totalItemPrice + deliveryFee;//adds up all the item prices
+
+            processedItems.push({
+
+                inventory_id: inv.inventory_id,
+                make: inv.make,
+                model: inv.model,
+                regNumber: inv.regNumber,
+                unit_price: unitPrice,
+                item_price: itemPrice,
+                deliveryFee: deliveryFee
+            });
+
+        
+            
+        db.run("INSERT INTO orders (user_id, totalPrice, latitude, longitude) VALUES (?, ?, ?, ?)", [user_id, totalPrice, latitude, longitude],
+
+            function(err){
+
+                if (err){
+                console.log(err,"DB Insertion unseccuesful");
+                return res.status(500).json({error: "Invoice creation fail"});                       
+                }
+    
+        
+        
+                      return res.status(201).json({
+                        order_id: this.lastID,//returns row ID of last inserted
+                        items: processedItems,
+                        total_price: totalPrice,
+                        latitude:latitude,
+                        longitude: longitude
+                    });
+
+            }
+        );
+    }catch(err){
+        console.log(err);
+        return res.status(500).json({error: "server err"});
     }
 
-        const ids = items.map( item => item.inventory_id);
-
-        const placeholder = ids.map(() => "?").join(",");
-
-        const results =  db.all (
-            "SELECT inventory_id, make, model, regNumber, fuel, litres FROM inventory WHERE inventory_id=? AND user_id =?",
-            [items.inventory_id, user_id]
-        );
-
-        const inv = results.rows[0];
-
-        if (!inv){
-
-            return res.status (404).json({error: "Inventory non existent"});
-        }
-    
-        const unitPrice = inv.fuel === "diesel"? dieselPrice : petrolPrice;
-
-        const itemPrice = unitPrice * inv.litres;
-
-        totalItemPrice += itemPrice;
-        
-        totalPrice = totalItemPrice + deliveryFee;//adds up all the item prices
-
-        processedItems.push({
-
-            inventory_id: inv.inventory_id,
-            make: inv.make,
-            model: inv.model,
-            regNumber: inv.regNumber,
-            unit_price: unitPrice,
-            item_price: itemPrice,
-            deliveryFee: deliveryFee
-        });
-
-    
-           
-       db.run("INSERT INTO orders (user_id, totalPrice, latitude, longitude) VALUES (?, ?, ?, ?)", [user_id, totalPrice, latitude, longitude],
-
-        function(err){
-            console.log(err,"DB Insertion unseccuesful");                       
-       });
-    
-        let invoice = 
-    
-                    res.status(201).json({
-                    order_id: orderResult.rows[0].id,
-                    items: processedItems,
-                    total_price: totalPrice,
-                    latitude:latitude,
-                    longitude: longitude
-                })
-
-                console.log(invoice);
-    });
+});
 
 
 
@@ -328,6 +340,7 @@ app.post("/store-user-data", auth, (req, res) => {
 
   console.log("AUTH USER:", req.user);
   console.log("DATA:", req.body);
+
 
   res.json({ success: true });
 });
