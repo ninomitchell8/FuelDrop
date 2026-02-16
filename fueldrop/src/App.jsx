@@ -5,6 +5,8 @@ import Login from "./pages/Login.jsx"
 import Landing from "./pages/Landing.jsx";
 import Home from "./pages/Home.jsx";
 import Configure from "./pages/Configure.jsx";
+import Invoice from "./pages/Invoice.jsx";
+
 
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
           <Route path ="/Login.jsx" element = {<Login />}/>
           <Route path = "/Home.jsx" element = {<Home />}/>
           <Route path = "/Configure.jsx" element = {<Configure />}/> 
+          <Route path = "/invoice" element = {<Invoice />} />
         </Routes>
       </Router>
   )

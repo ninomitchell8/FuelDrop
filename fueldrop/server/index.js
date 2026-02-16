@@ -251,7 +251,7 @@ app.post ("/invoice",auth, async(req,res)=>{
 
     const deliveryFee = 150;
 
-    const {items,latitude, longitude} = req.body;
+    const {items, latitude, longitude} = req.body;
 
     let processedItems = [];
 
@@ -266,20 +266,22 @@ app.post ("/invoice",auth, async(req,res)=>{
             return res.status(400).json({error: "All fields required"});
         }
 
-
-
     try{
 
         for (const item of items){
+       
+            const inv = await  new Promise((resolve,reject) => { db.get (
+                
+                "SELECT inventory_id, make, model, regNumber, fuel, litres,type FROM inventory WHERE inventory_id=? AND user_id =?",
+                [item.inventory_id, user_id],
+                (err, row) =>{
 
-        }
-        
-            const inv =  db.get (
-                "SELECT inventory_id, make, model, regNumber, fuel, litres FROM inventory WHERE inventory_id=? AND user_id =?",
-                [items.inventory_id, user_id]
+                    if (err)reject(err);
+                    else resolve(row);
+                }
             );
 
-
+        });
             if (!inv){
 
                 return res.status (404).json({error: "Inventory non existent"});
@@ -299,31 +301,36 @@ app.post ("/invoice",auth, async(req,res)=>{
                 make: inv.make,
                 model: inv.model,
                 regNumber: inv.regNumber,
+                fuel:inv.fuel,
+                litres: inv.litres,
+                type: inv.type,
                 unit_price: unitPrice,
                 item_price: itemPrice,
-                deliveryFee: deliveryFee
+                
             });
 
-        
+        }
+
             
-        db.run("INSERT INTO orders (user_id, totalPrice, latitude, longitude) VALUES (?, ?, ?, ?)", [user_id, totalPrice, latitude, longitude],
+        await db.run("INSERT INTO orders (user_id, totalPrice, latitude, longitude) VALUES (?, ?, ?, ?)", [user_id, totalPrice, latitude, longitude],
 
             function(err){
 
                 if (err){
-                console.log(err,"DB Insertion unseccuesful");
+                console.log(err,"DB Insertion unsuccesful");
                 return res.status(500).json({error: "Invoice creation fail"});                       
                 }
     
         
         
-                      return res.status(201).json({
-                        order_id: this.lastID,//returns row ID of last inserted
-                        items: processedItems,
-                        total_price: totalPrice,
-                        latitude:latitude,
-                        longitude: longitude
-                    });
+            return res.status(201).json({
+             order_id: this.lastID,//returns row ID of last inserted
+             items: processedItems,
+             total_price: totalPrice,
+             delivery_fee: deliveryFee,
+             latitude:latitude,
+             longitude: longitude
+            });                          
 
             }
         );

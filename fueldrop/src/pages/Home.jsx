@@ -5,10 +5,14 @@ import Card from "../components/Card.jsx";
 import Radio from "../components/Radio.jsx";
 import Input from "../components/Input.jsx";
 import SelectCard from "../components/SelectCard.jsx"
+import {useNavigate} from "react-router-dom";
+
 
 
 
 function Home(){
+
+    const navigate = useNavigate();
 
    const[inventory,setInventory] = useState([]); // retrieve data from db
  
@@ -143,7 +147,7 @@ function Home(){
             console.log("ORDER:", order);
 
 
-            const response = await fetch("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/orders",{ //sends order to backend
+            const res = await fetch("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/invoice",{ //sends order to backend
 
     
                 method: "POST",
@@ -154,10 +158,11 @@ function Home(){
             });
            
             
-            if(response.ok){
-
-                navigate("/home.jsx");
+            const data = await res.json()
+            
+            if(res.ok){
                 alert("Success");
+                navigate("/invoice",{state: data}); //use data inside route
             }
 
         }catch(err) {
@@ -230,6 +235,13 @@ function Home(){
                 <div>
                     <p> Add an item to your Fueldrop inventory before filling up. </p>
                 </div>
+                <div>
+                    <Button
+                    type = "submit"
+                    name = "+ Add Item"
+                    to = "/Configure.jsx"/>
+
+                </div>
                <form onSubmit={handleSubmit}>
                 <div>
                         {Array.isArray(inventory) && inventory.map (item =>( //Only render list if its an array - defensive render_map for ea item return componernt
@@ -257,13 +269,7 @@ function Home(){
 
             </form> 
 
-                <div>
-                    <Button
-                    type = "submit"
-                    name = "+ Add Item"
-                    to = "/Configure.jsx"/>
-
-                </div>
+                
                     
          </div>
     );
