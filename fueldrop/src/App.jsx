@@ -6,6 +6,7 @@ import Landing from "./pages/Landing.jsx";
 import Home from "./pages/Home.jsx";
 import Configure from "./pages/Configure.jsx";
 import Invoice from "./pages/Invoice.jsx";
+import Eta from "./pages/Eta.jsx";
 
 
 
@@ -20,6 +21,7 @@ function App() {
           <Route path = "/Home.jsx" element = {<Home />}/>
           <Route path = "/Configure.jsx" element = {<Configure />}/> 
           <Route path = "/invoice" element = {<Invoice />} />
+          <Route path = "/Eta.jsx" element = {<Eta />} />
         </Routes>
       </Router>
   )

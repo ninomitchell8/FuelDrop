@@ -4,8 +4,7 @@ import sqlite3 from "sqlite3";
 import { open } from "sqlite";
 import bcrypt from "bcryptjs"; 
 import jwt from "jsonwebtoken";
-
-
+import Openrouteservice from 'openrouteservice-js';
 
 
 const app = express();
@@ -270,7 +269,7 @@ app.post ("/invoice",auth, async(req,res)=>{
 
         for (const item of items){
        
-            const inv = await  new Promise((resolve,reject) => { db.get (
+            const inv = await new Promise((resolve,reject) => { db.get (
                 
                 "SELECT inventory_id, make, model, regNumber, fuel, litres,type FROM inventory WHERE inventory_id=? AND user_id =?",
                 [item.inventory_id, user_id],
@@ -341,7 +340,32 @@ app.post ("/invoice",auth, async(req,res)=>{
 
 });
 
+app.post("/eta",auth, async(req,res) =>{
 
+
+    const user_id = req.user.id;
+
+    const {order_id} = req.body;
+
+    const myLatitude = -33.940;
+
+    const myLongitude = 18.847;
+
+    const location = db.get("SELECT latitude, longitude FROM orders WHERE order_id = ? AND user_id = ?",[user_id]);
+
+    let matrix = new Openrouteservice.Matrix({api_key:"eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImQwMDM0ZGY5OWQ4MDQwNzk4NzFjNDU1YTg1MTE3NmQxIiwiaCI6Im11cm11cjY0In0="});
+
+            matrix.calculate({
+                locations: [[myLatitude, myLongitude], [location.latitude, location.longitude], [location.latitude, location.longitude]],
+                profile: "driving-car",
+                sources: ['all'],
+                destinations: ['all'],
+                metrics : ['duration','distance'],
+            }).then(function(json){
+                console.log(JSON.stringify(json));
+        });
+
+ }); 
 
 app.post("/store-user-data", auth, (req, res) => {
 

@@ -160,6 +160,7 @@ function Home(){
             
             const data = await res.json()
             
+            
             if(res.ok){
                 alert("Success");
                 navigate("/invoice",{state: data}); //use data inside route
@@ -260,10 +261,9 @@ function Home(){
                 </div>
 
                 <div>
-                    <h4>Location</h4>
                     <Button                
                         type = "submit"
-                        name = "Share Location"
+                        name = "Proceed"
                         />     
                 </div>
 

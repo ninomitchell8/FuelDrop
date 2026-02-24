@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from "react";
 import Navbar from "../components/Navbar";
 import {useNavigate,useLocation} from "react-router-dom";
+import Button from "../components/Button";
 
 
 
@@ -23,6 +24,7 @@ function Invoice() {
 
                     throw new Error("No Invoice data found");
                 }
+
     console.log(invoice)
 
     return(
@@ -44,12 +46,18 @@ function Invoice() {
 
             <div> 
                 <p> Delivery fee : R{Number(invoice.delivery_fee).toFixed(2)}</p>
-                <p> Total Price: R {Number(invoice.total_price).toFixed(2)} </p> 
-                
+                <p> Total Price: R {Number(invoice.total_price).toFixed(2)} </p>         
+            </div>
+
+            <div>
+
+                <Button 
+                 type = "submit"
+                 name = "Confirm"
+                 to = "/Eta.jsx" />
             
             </div>
             
-
         </div>
 
     );
