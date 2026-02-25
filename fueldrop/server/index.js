@@ -1,4 +1,4 @@
-import express from "express";
+import express, { json } from "express";
 import cors from "cors";
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
@@ -343,29 +343,54 @@ app.post ("/invoice",auth, async(req,res)=>{
 app.post("/eta",auth, async(req,res) =>{
 
 
+try{
+
+
     const user_id = req.user.id;
 
     const {order_id} = req.body;
 
-    const myLatitude = -33.940;
+    const origin = [18.847,-33.940 ]
 
-    const myLongitude = 18.847;
+    console.log("BODY:", req.body);
+    console.log("USER ID:", user_id);
+    console.log("ORDER ID:", order_id);
 
-    const location = db.get("SELECT latitude, longitude FROM orders WHERE order_id = ? AND user_id = ?",[user_id]);
+    const location = await new Promise((resolve,reject) =>{ db.get("SELECT latitude, longitude FROM orders WHERE order_id = ? AND user_id = ?",[order_id,user_id],
+        (err, row) =>{
 
-    let matrix = new Openrouteservice.Matrix({api_key:"eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImQwMDM0ZGY5OWQ4MDQwNzk4NzFjNDU1YTg1MTE3NmQxIiwiaCI6Im11cm11cjY0In0="});
+            if (err)reject (err);
 
-            matrix.calculate({
-                locations: [[myLatitude, myLongitude], [location.latitude, location.longitude], [location.latitude, location.longitude]],
+            else{ console.log("DB ROW",row);
+                resolve(row);
+            }
+        }
+    );
+
+})
+
+    const destination = [Number(location.longitude),Number(location.latitude)]
+
+    const matrix = await new Openrouteservice.Matrix({api_key:"eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImQwMDM0ZGY5OWQ4MDQwNzk4NzFjNDU1YTg1MTE3NmQxIiwiaCI6Im11cm11cjY0In0="});
+
+    const json = await matrix.calculate({
+                locations: [origin, destination],
                 profile: "driving-car",
-                sources: ['all'],
-                destinations: ['all'],
                 metrics : ['duration','distance'],
-            }).then(function(json){
-                console.log(JSON.stringify(json));
-        });
+            })
 
- }); 
+            const durationSeconds = json.durations[0][1];
+            const durationMinutes = Math.round(durationSeconds/60);
+
+            res.json({eta: durationMinutes});
+    }catch(err){
+
+        console.error("ETA error",err);
+    }
+    
+});
+
+
 
 app.post("/store-user-data", auth, (req, res) => {
 
