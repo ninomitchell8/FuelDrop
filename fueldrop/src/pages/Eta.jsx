@@ -1,16 +1,21 @@
 import React,{useState, useEffect} from "react";
 
 
-
 function Eta(){
 
-   const [loading, setLoading] = useState ([true]);
+   const token = localStorage.getItem("token");
 
-   const [etaData, setEtaData] = useState(null);
+   const [loading, setLoading] = useState (true);
+
+   const [eta, setEta] = useState(null);
+
+   const orderId = 0;
 
    useEffect( ()=> {
 
-    const fetchETA = async () => {
+    if(!orderId)return;
+
+    const fetchETA = async (orderId) => {
 
         try {
 
@@ -19,10 +24,10 @@ function Eta(){
                 method:"POST",
                 headers:{                 
                      "Content-Type": "application/json",
-                    "Authorization" : `Bearer ${token}`
+                    "Authorization" : `Bearer ${token}`,
                 },
 
-                body: JSON.stringify(({ordfer_id:1}))
+                body: JSON.stringify(({order_id: orderId}))
             })
 
                 if (!res.ok){
@@ -32,28 +37,26 @@ function Eta(){
 
                 const data = await res.json();
                 console.log(data);
-                setEtaData(data);
-                setLoading ([false]);
+                setEta(data.eta);
+                setLoading (false);
 
 
         }catch(err){
 
-            console.log(err);
+            console.error("failed to fetch",err);
         }
 
 
     };
 
-
-
-    fetchETA();
+    fetchETA(orderId);
   
-    },[]);
+    },[orderId]);
 
     return (
 
         <div>
-            <p>{JSON.stringify(etaData,null,2)} </p>
+        {eta && <p> {eta} </p>}
         </div>
     );
 }

@@ -144,7 +144,11 @@ function Home(){
 
             };
 
+           
+
             console.log("ORDER:", order);
+
+            
 
 
             const res = await fetch("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/invoice",{ //sends order to backend
@@ -158,10 +162,16 @@ function Home(){
             });
            
             
-            const data = await res.json()
+            const data = await res.json();
+
+            if (!order){
+
+                    alert("Select an item from your inventory to proceed");
+                    navigate("/home");
+                }
+                
             
-            
-            if(res.ok){
+            else if(res.ok){
                 alert("Success");
                 navigate("/invoice",{state: data}); //use data inside route
             }
@@ -197,9 +207,7 @@ function Home(){
                 console.log(data);
                 setInventory(Array.isArray(data) ? data: []);// ? = if array = true = data_ else = []
                 setLoading(false);  
-            
-
-            
+                        
             console.log("RAW /home response:", data);
 
             }catch (err){
