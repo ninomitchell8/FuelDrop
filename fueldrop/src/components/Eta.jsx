@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from "react";
 
 
-function Eta(){
+function Eta({orderId}){
 
    const token = localStorage.getItem("token");
 
@@ -9,13 +9,13 @@ function Eta(){
 
    const [eta, setEta] = useState(null);
 
-   const orderId = 0;
+   console.log("ETA COMPONENT ORDER ID:", orderId);
 
    useEffect( ()=> {
 
-    if(!orderId)return;
+    if (!orderId) return;
 
-    const fetchETA = async (orderId) => {
+    const fetchETA = async () => {
 
         try {
 
@@ -26,11 +26,10 @@ function Eta(){
                      "Content-Type": "application/json",
                     "Authorization" : `Bearer ${token}`,
                 },
+                body: JSON.stringify({order_id: orderId})
+            });
 
-                body: JSON.stringify(({order_id: orderId}))
-            })
-
-                if (!res.ok){
+            if (!res.ok){
 
                     throw new Error ("Http err");
                 }
@@ -39,7 +38,7 @@ function Eta(){
                 console.log(data);
                 setEta(data.eta);
                 setLoading (false);
-
+                console.log("ETA from API:", data.eta);
 
         }catch(err){
 
@@ -49,14 +48,21 @@ function Eta(){
 
     };
 
-    fetchETA(orderId);
-  
-    },[orderId]);
+    fetchETA();
+
+    // run every 10 seconds
+        const interval = setInterval(fetchETA,10000);
+
+        return ()=> clearInterval(interval);
+
+    },[orderId,token]);   
 
     return (
 
         <div>
-        {eta && <p> {eta} </p>}
+        
+       {eta !== null && <p>Estimated delivery time: {eta} minutes</p>}
+       
         </div>
     );
 }

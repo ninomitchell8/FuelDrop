@@ -144,12 +144,7 @@ function Home(){
 
             };
 
-           
-
             console.log("ORDER:", order);
-
-            
-
 
             const res = await fetch("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/invoice",{ //sends order to backend
 
@@ -171,7 +166,7 @@ function Home(){
                 }
                 
             
-            else if(res.ok){
+            if(res.ok){
                 alert("Success");
                 navigate("/invoice",{state: data}); //use data inside route
             }

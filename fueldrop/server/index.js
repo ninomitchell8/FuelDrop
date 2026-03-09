@@ -329,6 +329,7 @@ app.post ("/invoice",auth, async(req,res)=>{
              delivery_fee: deliveryFee,
              latitude:latitude,
              longitude: longitude
+
             });                          
 
             }
@@ -342,15 +343,15 @@ app.post ("/invoice",auth, async(req,res)=>{
 
 app.post("/eta",auth, async(req,res) =>{
 
+    console.log("ETA ROUTE HIT");
 
 try{
-
 
     const user_id = req.user.id;
 
     const {order_id} = req.body;
 
-    const origin = [18.847,-33.940 ]
+    const origin = [18.847,-33.940]
 
     console.log("BODY:", req.body);
     console.log("USER ID:", user_id);
@@ -371,22 +372,44 @@ try{
 
     const destination = [Number(location.longitude),Number(location.latitude)]
 
-    const matrix = await new Openrouteservice.Matrix({api_key:"eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImQwMDM0ZGY5OWQ4MDQwNzk4NzFjNDU1YTg1MTE3NmQxIiwiaCI6Im11cm11cjY0In0="});
+    //const matrix =  new Openrouteservice.Matrix({api_key:"eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImQwMDM0ZGY5OWQ4MDQwNzk4NzFjNDU1YTg1MTE3NmQxIiwiaCI6Im11cm11cjY0In0="});
+    const api = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImQwMDM0ZGY5OWQ4MDQwNzk4NzFjNDU1YTg1MTE3NmQxIiwiaCI6Im11cm11cjY0In0="
+    
+    const response = await fetch ("https://api.openrouteservice.org/v2/matrix/driving-car",{
 
-    const json = await matrix.calculate({
-                locations: [origin, destination],
-                profile: "driving-car",
-                metrics : ['duration','distance'],
-            })
+        method: "POST",
+        headers: {
+           "Authorization": api,
+            "Content-Type": "application/json"
+        },
 
-            const durationSeconds = json.durations[0][1];
-            const durationMinutes = Math.round(durationSeconds/60);
+        body: JSON.stringify({         
+            locations: [origin, destination],
+            metrics: ["duration", "distance"]})
+    });
+    
+        const json = await response.json();
 
-            res.json({eta: durationMinutes});
+        const durationSeconds = json.durations[0][1];
+
+        const durationMinutes = Math.round(durationSeconds/60);
+
+        
+        console.log("ORIGIN:", origin)
+        console.log("DESTINATION:", destination)
+        console.log("ORS STATUS:", response.status)
+        console.log("ORS JSON:", json)
+        console.log("ORS RESPONSE:", json);
+
+        res.json({eta: durationMinutes});
+
+
     }catch(err){
 
         console.error("ETA error",err);
-    }
+        res.status(500).json({error:"ETA calculation failed"});
+}
+    
     
 });
 
