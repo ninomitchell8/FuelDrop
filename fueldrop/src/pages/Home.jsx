@@ -117,6 +117,11 @@ function Home(){
 
     const handleSubmit = async (e) =>{
 
+        if (selectedItems.length === 0){
+        alert("Select an item from your inventory to proceed");
+        return;
+    }
+
         const token = localStorage.getItem("token"); //get token from storage
 
         e.preventDefault() 

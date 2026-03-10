@@ -22,7 +22,6 @@ function Configure(){
         });
 
 
-
     const handleChange = async (e) => {
 
         setFormData ({...formData,[e.target.name]: e.target.value});
@@ -81,84 +80,91 @@ function Configure(){
                     labelName = "Car"
                     name = "type"
                     onChange = {handleChange}
-                    value = "car"
+                    value = "Car"
                     />
 
                   <Radio 
                     labelName = "Bakkie"
                     name = "type"
                     onChange = {handleChange}
-                    value = "bakkie"
+                    value = "Bakkie"
+                    />
+
+                     <Radio 
+                    labelName = "SUV"
+                    name = "type"
+                    onChange = {handleChange}
+                    value = "SUV"
                     />
 
                 <Radio 
                     labelName = "Truck"
                     name = "type"
                     onChange = {handleChange}
-                    value = "truck"
+                    value = "Truck"
                    />
 
                 <Radio 
                     labelName = "Bus"
                     name = "type"
                     onChange = {handleChange}
-                    value = "bus"
+                    value = "Bus"
                    />
                 
                 <Radio 
                     labelName = "Locomotive"
                     name = "type"
                     onChange = {handleChange}
-                    value = "locomotive"
+                    value = "Locomotive"
                    />
                 
                 <Radio 
                     labelName = "Generator"
                     name = "type"
                     onChange = {handleChange}
-                    value = "generator"
+                    value = "Generator"
                     />
 
                  <Radio 
                     labelName = "Boiler"
                     name = "type"
                     onChange = {handleChange}
-                    value ="boiler"
+                    value ="Boiler"
                     />
                 
                 <Radio 
                     labelName = "Tractor"
                     name = "type"
                     onChange = {handleChange}
-                    value = "tractor"
+                    value = "Tractor"
                     />
 
                  <Radio 
                     labelName = "Harvester"
                     name = "type"
                     onChange = {handleChange}
-                    value = "harvester"
+                    value = "Harvester"
                     />
 
                  <Radio 
                     labelName = "Combine"
                     name = "type"
                     onChange = {handleChange}
-                    value = "combine"
+                    value = "Combine"
                      />
                 
                 <Radio                 
                     labelName = "Boat"
                     name = "type"
                     onChange = {handleChange}
-                    value = "boat"
+                    value = "Boat"
                     />
 
                 <Radio                 
                     labelName = "Other"
                     name = "type"
                     onChange = {handleChange}
-                    value = "other"
+                    value = "Other"
                     />
 
                 <Input 

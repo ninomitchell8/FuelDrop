@@ -54,7 +54,7 @@ function Invoice() {
                 <Button 
                  type = "submit"
                  name = "Confirm Order"
-                 onClick={() => navigate("/eta", { state: invoice })}
+                 to = "/Confirm.jsx"
                 />
             
             </div>

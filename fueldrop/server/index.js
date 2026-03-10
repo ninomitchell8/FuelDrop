@@ -372,7 +372,6 @@ try{
 
     const destination = [Number(location.longitude),Number(location.latitude)]
 
-    //const matrix =  new Openrouteservice.Matrix({api_key:"eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImQwMDM0ZGY5OWQ4MDQwNzk4NzFjNDU1YTg1MTE3NmQxIiwiaCI6Im11cm11cjY0In0="});
     const api = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImQwMDM0ZGY5OWQ4MDQwNzk4NzFjNDU1YTg1MTE3NmQxIiwiaCI6Im11cm11cjY0In0="
     
     const response = await fetch ("https://api.openrouteservice.org/v2/matrix/driving-car",{
