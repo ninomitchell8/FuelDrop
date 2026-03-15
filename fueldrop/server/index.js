@@ -258,6 +258,8 @@ app.post ("/invoice",auth, async(req,res)=>{
 
     let totalPrice = 0;
 
+    let minPrice = 0;
+
     const user_id = req.user.id;
 
     if( !items|| !latitude ||!longitude) {
@@ -294,6 +296,8 @@ app.post ("/invoice",auth, async(req,res)=>{
             
             totalPrice = totalItemPrice + deliveryFee;//adds up all the item prices
 
+            minPrice = totalPrice *0.75; 
+
             processedItems.push({
 
                 inventory_id: inv.inventory_id,
@@ -326,6 +330,7 @@ app.post ("/invoice",auth, async(req,res)=>{
              order_id: this.lastID,//returns row ID of last inserted
              items: processedItems,
              total_price: totalPrice,
+             min_price: minPrice,
              delivery_fee: deliveryFee,
              latitude:latitude,
              longitude: longitude
