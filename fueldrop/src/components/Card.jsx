@@ -6,7 +6,7 @@ function Card (props){
     return(
         <div className="card">
             <div className="card-header">
-                {props.cardHeader}
+               <h5> {props.cardHeader} </h5>
             </div>
             <div className="card-body">
                 <figure>

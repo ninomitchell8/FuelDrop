@@ -1,20 +1,21 @@
 .card {
 
-    display: flex;
-    gap: 1rem;
-    width: 15%;
+    display: grid;
+    gap: 1px,1px,1px;
+    width: 60%;
     text-align:centre;
-    margin-left: 42.5%;
+    margin-left: 130px;
     border-radius: 10px;
-    margin-bottom: 1rem;
+    margin-bottom: 20px;
 }
 
 .card-header{
 
-    background-color: aquamarine;
+    background-color: #7AAACE;
+    
 }
 
 .card-body{
 
-    background-color:azure;
+    background-color:#F7F8F0;
 }

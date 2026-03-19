@@ -101,18 +101,19 @@ function Register(){
                 value = {formData.confirmPassword} 
                 onChange = {handleChange}
                 />
-            <Button 
-                type ="submit"
-                name = "Submit"
-                />
-
-            <p> OR </p>
 
             <Button 
                 type = "submit"
-                name = "Login"
+                name = " < Back to Login"
                 to  = "/Login.jsx"
                 />
+
+            <Button 
+                type ="submit"
+                name = "Submit >"
+                />
+
+       
         </form>
         </div>
     )

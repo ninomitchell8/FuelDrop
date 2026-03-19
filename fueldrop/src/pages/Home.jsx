@@ -6,6 +6,7 @@ import Radio from "../components/Radio.jsx";
 import Input from "../components/Input.jsx";
 import SelectCard from "../components/SelectCard.jsx"
 import {useNavigate} from "react-router-dom";
+import "./Home.css";
 
 
 
@@ -16,7 +17,7 @@ function Home(){
 
    const[inventory,setInventory] = useState([]); // retrieve data from db
  
-   const [loading,setLoading] = useState([true]); // load inventory on opening of Home
+   const [loading,setLoading] = useState(true); // load inventory on opening of Home
 
    const [selectedItems,setSelectedItems] = useState ([]); // select button
 
@@ -166,7 +167,7 @@ function Home(){
 
             if (!order){
 
-                    alert("Select an item from your inventory to proceed");
+                    alert("Add an item to the fueling queue to proceed");
                     navigate("/home");
                 }
                 
@@ -227,8 +228,8 @@ function Home(){
         <div>
             
             <Navbar />
-                <h3> Ready to fill up?</h3>
-        
+                <h1> Lets fill up!</h1>
+            
                 <div className ="fuel">
                     <Card 
                         cardHeader  = "Petrol - 95 Unleaded"
@@ -242,7 +243,7 @@ function Home(){
                 </div>
 
                 <div>
-                    <p> Add an item to your Fueldrop inventory before filling up. </p>
+                    <h5> Add an item to your Fueldrop inventory before filling up. </h5>
                 </div>
                 <div>
                     <Button
@@ -252,7 +253,7 @@ function Home(){
 
                 </div>
                <form onSubmit={handleSubmit}>
-                <div>
+                <div className = "Inventory">
                         {Array.isArray(inventory) && inventory.map (item =>( //Only render list if its an array - defensive render_map for ea item return componernt
                             <SelectCard
                                 key = {item.inventory_id}               
@@ -271,7 +272,7 @@ function Home(){
                 <div>
                     <Button                
                         type = "submit"
-                        name = "Proceed"
+                        name = "Proceed >"
                         />     
                 </div>
 

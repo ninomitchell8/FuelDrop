@@ -81,10 +81,8 @@ function Login() {
                 type ="submit"
                 name = "Login"
                 />
-            
-            <p> OR </p>
-             
-            <Button 
+              
+           <Button 
                 type ="submit"
                 name = "Create Account"
                 to = "/Register.jsx"

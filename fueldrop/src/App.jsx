@@ -21,6 +21,7 @@ function App() {
           <Route path = "/invoice" element = { <Invoice/> }/>
           <Route path = "/Confirm.jsx" element = { <Confirm/> }/>
           <Route path = "/Thanks.jsx" element = { <Thanks/> }/>
+          <Route path = "/Login.jsx" element = { <Login/> }/>
         </Routes>
       </Router>
   )

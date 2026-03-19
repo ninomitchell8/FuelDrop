@@ -29,6 +29,8 @@ function Invoice() {
         <div>
             <Navbar />
 
+            <h1>Invoice</h1>
+
             {invoice.items.map((item, index) =>(
 
                 <div key={`${item.inventory_id}-${index}`}>
@@ -42,7 +44,8 @@ function Invoice() {
 
             <div> 
                 <p> Delivery fee : R{Number(invoice.delivery_fee).toFixed(2)}</p>
-                <p> Total Price: R {Number(invoice.total_price).toFixed(2)} </p>         
+                <p> Total Price: R {Number(invoice.total_price).toFixed(2)} </p> 
+                <p> Minimum payable price on delivery (75%): R{Number(invoice.min_price).toFixed(2)}</p>        
             </div>
 
             <div>
@@ -52,9 +55,15 @@ function Invoice() {
             <div>
 
                 <Button 
+                type = "submit"
+                name = "< Back"
+                to = "/Home.jsx"
+                />
+
+                <Button 
                  type = "submit"
-                 name = "Confirm Order"
-                 to = "/Confirm.jsx"
+                 name = "Confirm Order > "
+                 to = "/Thanks.jsx"
                 />
             
             </div>
