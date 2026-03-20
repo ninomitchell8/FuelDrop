@@ -3,6 +3,9 @@ import Navbar from "../components/Navbar";
 import {useNavigate,useLocation} from "react-router-dom";
 import Button from "../components/Button";
 import Eta from "../components/Eta";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faTruckFast } from "@fortawesome/free-solid-svg-icons";
 
 
 function Invoice() {
@@ -31,12 +34,13 @@ function Invoice() {
 
             <h1>Invoice</h1>
 
+            <p> Registration / Serial No: Make: Model: Type: Fuel:  Unit Price:  Item Price:  </p>
+
             {invoice.items.map((item, index) =>(
 
                 <div key={`${item.inventory_id}-${index}`}>
-                    <p> {item.make} - {item.model} - {item.type} </p>
-                    <p> Registration / Serial No: Fuel:  Unit Price:  Item Price:  </p>
-                    <p> {item.regNumber} {item.fuel} R{Number(item.unit_price).toFixed(2)} R{Number(item.item_price).toFixed(2)}</p>
+
+                    <p> {item.regNumber} {item.make} {item.model} {item.type} {item.fuel} R{Number(item.unit_price).toFixed(2)} R{Number(item.item_price).toFixed(2)}</p>
                     
                 </div>
           
@@ -56,13 +60,13 @@ function Invoice() {
 
                 <Button 
                 type = "submit"
-                name = "< Back"
+                name = {<><FontAwesomeIcon icon={faArrowLeft}/>Back </>}
                 to = "/Home.jsx"
                 />
 
                 <Button 
                  type = "submit"
-                 name = "Confirm Order > "
+                 name = {<>Confirm Order <FontAwesomeIcon icon={faTruckFast} /> </>} 
                  to = "/Thanks.jsx"
                 />
             

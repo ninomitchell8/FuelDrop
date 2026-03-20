@@ -71,7 +71,7 @@ function Configure(){
         <div>
             <Navbar/>
             
-            <h3> Fill in Item details</h3>
+            <h1> Fill in your new Inventory Item details</h1>
           <form onSubmit = {handleSubmit}>
             <div>
                 <h4> Select Type </h4>
@@ -205,7 +205,7 @@ function Configure(){
             </div>
             <div>
                 <h4> Fuel Quantity </h4>
-                <p>(min: 50 litres _ max: 100 litres)</p>                                                 
+                <p>(min: 50 litres _ max: 1000 litres)</p>                                                 
                 <Input
                     type  = "text"                
                     placeholder = "Litres 50 < 1000"

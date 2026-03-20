@@ -1,7 +1,13 @@
 import React from "react";
+import Button from"../components/Button.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faGasPump} from "@fortawesome/free-solid-svg-icons";
+
+
 
 function Thanks (){
 
+    
 
 
     return (
@@ -9,10 +15,16 @@ function Thanks (){
         <div>
 
             <h3> 
-                 Thank you for filling up with Fueldrop.
-                 The Fuel station that comes to you! 
-                 Saving you time saving you money.
+                 Your Fuel will be Delivererd to you shortly.
+                 Thank you for making <><FontAwesomeIcon icon={faGasPump} /></>Fueldrop your Refueling partner!
             </h3>
+
+           
+            <Button 
+                type= "btn"
+                name= "Log Out"
+                to = "/Login.jsx"
+            />
 
         </div>
     )

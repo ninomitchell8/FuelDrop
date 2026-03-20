@@ -1,7 +1,8 @@
 .selectCard{
     width : 60%;
-    align-items: center;
     border-radius: 10px;
+    gap : 10px;
+    margin-left: 20%;
  
 }
 

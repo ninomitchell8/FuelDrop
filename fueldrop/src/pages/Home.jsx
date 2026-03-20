@@ -7,6 +7,8 @@ import Input from "../components/Input.jsx";
 import SelectCard from "../components/SelectCard.jsx"
 import {useNavigate} from "react-router-dom";
 import "./Home.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -243,12 +245,12 @@ function Home(){
                 </div>
 
                 <div>
-                    <h5> Add an item to your Fueldrop inventory before filling up. </h5>
+                    <h4> Add an item to your Fueldrop inventory before filling up. </h4>
                 </div>
                 <div>
                     <Button
                     type = "submit"
-                    name = "+ Add Item"
+                    name = "+ Add Item to Inventory"
                     to = "/Configure.jsx"/>
 
                 </div>
@@ -272,7 +274,7 @@ function Home(){
                 <div>
                     <Button                
                         type = "submit"
-                        name = "Proceed >"
+                        name = {<>Proceed <FontAwesomeIcon icon={faArrowRight}/></> }
                         />     
                 </div>
 

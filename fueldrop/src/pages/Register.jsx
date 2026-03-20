@@ -76,6 +76,7 @@ function Register(){
                 name = "cellphone"
                 placeholder = "Cellphone"
                 value = {formData.cellphone}
+                
                 onChange = {handleChange}
                 />
 
