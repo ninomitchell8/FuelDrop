@@ -1,7 +1,8 @@
 import React,{useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Input from "../components/Input.jsx";
-import Button from "../components/Button.jsx"
+import Button from "../components/Button.jsx";
+import Footer from"../components/Footer.jsx";
 
 function Login() {
 
@@ -40,12 +41,12 @@ function Login() {
            
             localStorage.setItem("token", data.token);
             console.log("JWT:", data.token);
-            alert ("success");
+            
         }
 
             }catch (err){
 
-                alert(err.message);
+                throw new Error (alert("Failed to log in! Incorrect username or password."));
             }
         
     
@@ -88,6 +89,8 @@ function Login() {
                 to = "/Register.jsx"
                 />
         </form>
+
+        <Footer />
         </div>
      
         

@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar.jsx";
 import Card from "../components/Card.jsx";
 import Radio from "../components/Radio.jsx";
 import Input from "../components/Input.jsx";
+import Footer from"../components/Footer.jsx";
 import {useNavigate} from "react-router-dom";
 
 
@@ -57,12 +58,15 @@ function Configure(){
             if(response.ok){
 
                 navigate("/home.jsx");
-                alert("Success");
+                
+            }else{
+                alert("All fields required!");
             }
 
         }catch(err) {
 
-                    alert(err.message);
+                    throw new Error("Error creating Inventory Item");
+                    
                 }
 
 };
@@ -208,7 +212,7 @@ function Configure(){
                 <p>(min: 50 litres _ max: 1000 litres)</p>                                                 
                 <Input
                     type  = "text"                
-                    placeholder = "Litres 50 < 1000"
+                    placeholder = "Litres 50 < 10000"
                     name = "litres"
                     min = {50}
                     max = {1000}
@@ -217,13 +221,22 @@ function Configure(){
             
             </div>
             <div>
+
+                <Button 
+                type = "submit"
+                name = "Cancel"
+                to = "/home.jsx"
+                />
+                
                 <Button
                         type = "submit"
-                        name = "Save to inventory"
+                        name = "Add to inventory"
                         />
-            </div>
-          </form>
                 
+            </div>
+
+          </form>
+                <Footer />
             </div>
     )
 }

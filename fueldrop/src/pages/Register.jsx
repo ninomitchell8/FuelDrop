@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import Input from "../components/Input.jsx";
-import Button from "../components/Button.jsx"
+import Button from "../components/Button.jsx";
+import Footer from"../components/Footer.jsx";
 import { useNavigate } from "react-router-dom";
 
 
@@ -116,6 +117,8 @@ function Register(){
 
        
         </form>
+
+        <Footer />
         </div>
     )
  };

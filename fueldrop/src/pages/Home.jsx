@@ -5,7 +5,8 @@ import Card from "../components/Card.jsx";
 import Radio from "../components/Radio.jsx";
 import Input from "../components/Input.jsx";
 import SelectCard from "../components/SelectCard.jsx"
-import {useNavigate} from "react-router-dom";
+import Footer from"../components/Footer.jsx";
+import {useNavigate,useLocation} from "react-router-dom";
 import "./Home.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -15,6 +16,8 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 function Home(){
 
+    const locations = useLocation();
+
     const navigate = useNavigate();
 
    const[inventory,setInventory] = useState([]); // retrieve data from db
@@ -23,7 +26,7 @@ function Home(){
 
    const [selectedItems,setSelectedItems] = useState ([]); // select button
 
-   const [location,setLocation] = useState ([null]); //intial state no valid data = null
+   const [location,setLocation] = useState (null); //intial state no valid data = null
 
    const [order,setOrder] = useState({
 
@@ -167,7 +170,7 @@ function Home(){
             
             const data = await res.json();
 
-            if (!order){
+            if (selectedItems.length === 0){
 
                     alert("Add an item to the fueling queue to proceed");
                     navigate("/home");
@@ -175,18 +178,22 @@ function Home(){
                 
             
             if(res.ok){
-                alert("Success");
+                
                 navigate("/invoice",{state: data}); //use data inside route
             }
 
         }catch(err) {
 
-                    alert(err.message);
+                    throw new Error (alert("No data captured for invoice"));
+            
                 }
 
     };
+ 
 
    useEffect( () => { //not allowed to make async
+
+    
 
     const fetchData = async() => {
 
@@ -217,12 +224,15 @@ function Home(){
                 console.log("Failed to fetch inventory", err);
 
             }
-       };
 
+             if (location.state?.refresh) {
+                fetchData();
+    }
+       };
 
     fetchData(); //manual run
     
-},[]);
+},[locations.state]);
 
 
     
@@ -253,6 +263,10 @@ function Home(){
                     name = "+ Add Item to Inventory"
                     to = "/Configure.jsx"/>
 
+                <div>
+                    <h4> Select Item from your inventory to proceed. </h4>
+                </div>
+
                 </div>
                <form onSubmit={handleSubmit}>
                 <div className = "Inventory">
@@ -279,6 +293,8 @@ function Home(){
                 </div>
 
             </form> 
+
+            <Footer />
 
                 
                     
