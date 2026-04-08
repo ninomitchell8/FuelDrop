@@ -49,6 +49,8 @@ function Invoice() {
                         <th>Type</th>
                         
                         <th>Fuel</th>
+
+                        <th>Max capcity (Litres)</th>
                         
                         <th>Unit Price</th>
                         
@@ -64,13 +66,14 @@ function Invoice() {
                             <td>{item.make}</td>                          
                             <td>{item.model}</td>                           
                             <td>{item.type}</td>                            
-                            <td>{item.fuel}</td>                           
+                            <td>{item.fuel}</td>
+                            <td>{item.litres}</td>                           
                             <td>R{Number(item.unit_price).toFixed(2)}</td>                         
                             <td>R{Number(item.item_price).toFixed(2)}</td>
                         </tr>
                         ))}
 
-                       <tbody>
+                       <tbody className = "invTotals">
                             <tr>
                                 <td>Delivery fee : R{Number(invoice.delivery_fee).toFixed(2)}</td>
                             </tr>

@@ -16,7 +16,7 @@ function Thanks (){
         <div>
 
             <h3> 
-                 Your Fuel will be Delivererd to you shortly.
+                 Your Fuel will be Delivered to you shortly.
                  Thank you for making <><FontAwesomeIcon icon={faGasPump} /></>Fueldrop your Refueling partner!
             </h3>
 

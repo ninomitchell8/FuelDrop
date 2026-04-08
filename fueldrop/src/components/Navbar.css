@@ -1,9 +1,33 @@
 .nav{
 
-    background-color:  #F7F8F0;
+    background-color: #355872;
 }
 
 .navbar-brand{
 
-    font-size:25px ;
+    font-size:30px ;
+    background-color: #355872;
+    color: #F7F8F0;
+}
+
+.navbar-toggler{
+
+      background-color: #355872;
+
+};
+
+.navbar-collapse{
+
+    background-color: #355872;
+}
+
+.navbar-toggler-icon{
+
+     background-color: #355872;
+
+}
+
+.logOut{
+
+    background-color: #355872;
 }
