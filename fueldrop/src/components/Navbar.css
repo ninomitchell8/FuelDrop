@@ -14,7 +14,7 @@
 
       background-color: #355872;
 
-};
+}
 
 .navbar-collapse{
 
@@ -27,7 +27,8 @@
 
 }
 
-.logOut{
+.nav-link{
 
     background-color: #355872;
+    color: #F7F8F0;
 }

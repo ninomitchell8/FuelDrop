@@ -50,18 +50,13 @@ function Eta({orderId}){
 
     fetchETA();
 
-    // run every 10 seconds
-        const interval = setInterval(fetchETA,10000);
-
-        return ()=> clearInterval(interval);
-
     },[orderId,token]);   
 
     return (
 
         <div>
         
-       {eta !== null && <p>Estimated delivery time: {eta} minutes</p>}
+       {eta !== null && <p>{eta} minutes</p>}
        
         </div>
     );

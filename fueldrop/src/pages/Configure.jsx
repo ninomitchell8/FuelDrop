@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import Button from "../components/Button.jsx";
 import Navbar from "../components/Navbar.jsx";
-import Card from "../components/Card.jsx";
+import "./Configure.css";
 import Radio from "../components/Radio.jsx";
 import Input from "../components/Input.jsx";
 import Footer from"../components/Footer.jsx";

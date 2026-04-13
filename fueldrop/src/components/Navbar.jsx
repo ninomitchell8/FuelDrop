@@ -12,10 +12,13 @@ function Navbar(){
     <div>
 
             <div className = "nav">
-                <nav className="navbar navbar-expand-lg bg-body-tertiary">
+                <nav className="navbar navbar-expand-lg ">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="../Home.jsx"><><FontAwesomeIcon icon={faGasPump} /></>Fueldrop</a>
-                    <a className="LogOut" href="../Login.jsx"><p>logout</p></a>
+                    <a className="navbar-brand" href="../Home.jsx"><><FontAwesomeIcon icon={faGasPump} /></>FuelDrop</a>
+                    <a className="nav-link" href="../Login.jsx"></a>
+                    <a className="nav-link" href="../Login.jsx"></a>
+
+                    <a className="nav-link" href="../Login.jsx">Log Out</a>
                     
                     <div className="navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">

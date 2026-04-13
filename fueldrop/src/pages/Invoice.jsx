@@ -36,7 +36,8 @@ function Invoice() {
 
             <h1>Invoice</h1>
 
-            <div>
+            <div className="table-wrapper">
+
                 <table className="invoice-table">
                     <thead>
                         <tr>
@@ -50,12 +51,13 @@ function Invoice() {
                         
                         <th>Fuel</th>
 
-                        <th>Max capcity (Litres)</th>
+                        <th>Max capacity (Litres)</th>
                         
-                        <th>Unit Price</th>
+                        <th>Unit price</th>
                         
-                        <th>Total</th>
+                        <th>Item total</th>
                         
+
                         </tr>
                     </thead>
 
@@ -72,23 +74,33 @@ function Invoice() {
                             <td>R{Number(item.item_price).toFixed(2)}</td>
                         </tr>
                         ))}
-
-                       <tbody className = "invTotals">
-                            <tr>
-                                <td>Delivery fee : R{Number(invoice.delivery_fee).toFixed(2)}</td>
-                            </tr>
-                            <tr>
-                                  <td>  <Eta orderId={invoice.order_id} /> </td>
-                            </tr>
-                            <tr>
-                                <td>Minimum total payable (75%): <strong>R{Number(invoice.min_price).toFixed(2)}</strong></td>
-                            </tr>
-                            <tr>                                             
-                                <td>Maximum total payable: <strong>R {Number(invoice.total_price).toFixed(2)}</strong></td>
-                            </tr>
-                        </tbody> 
+                       
                     </tbody>
                 </table>
+                
+                <div className="invoice-summary">
+  
+                    <div className="summary-item">
+                        <span>Estimated delivery:</span>
+                        <span><Eta orderId={invoice.order_id} /></span>
+                    </div>
+
+                    <div className="summary-item">
+                        <span>Delivery fee:</span>
+                        <span>R{Number(invoice.delivery_fee).toFixed(2)}</span>
+                    </div>
+
+                    <div className="summary-item">
+                        <span>Minimum total (75%):</span>
+                        <strong>R{Number(invoice.min_price).toFixed(2)}</strong>
+                    </div>
+
+                    <div className="summary-item">
+                        <span>Maximum total:</span>
+                        <strong>R{Number(invoice.total_price).toFixed(2)}</strong>
+                    </div>
+
+                    </div>
             </div>
             <div>
 
@@ -101,7 +113,7 @@ function Invoice() {
                 <Button 
                  type = "submit"
                  name = {<>Confirm Order <FontAwesomeIcon icon={faTruckFast} /> </>} 
-                 to = "/Thanks.jsx"
+                 onClick = {() => navigate("/Thanks.jsx", { state: invoice })}
                 />
             
             </div>

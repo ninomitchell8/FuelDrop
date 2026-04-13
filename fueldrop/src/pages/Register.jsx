@@ -2,7 +2,11 @@ import React, {useState} from "react";
 import Input from "../components/Input.jsx";
 import Button from "../components/Button.jsx";
 import Footer from"../components/Footer.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import "./Register.css";
 
 
 
@@ -37,7 +41,7 @@ function Register(){
         });
         const data = await response.json();
         console.log("Success:", data.message);
-        alert ("success");
+      
 
         if (response.ok){ //boolean value
 
@@ -55,7 +59,7 @@ function Register(){
 
     return(
 
-        <div>
+        <div className = "register">
             <h1>Register</h1>
         <form onSubmit = {handleSubmit}>
             <Input 
@@ -106,13 +110,13 @@ function Register(){
 
             <Button 
                 type = "submit"
-                name = " < Back to Login"
+                name = {<> <FontAwesomeIcon icon={faArrowLeft}/>Login</> }
                 to  = "/Login.jsx"
                 />
 
             <Button 
                 type ="submit"
-                name = "Submit >"
+                name = {<>Submit <FontAwesomeIcon icon={faArrowRight}/></> }
                 />
 
        
@@ -124,3 +128,4 @@ function Register(){
  };
 
 export default Register;
+

@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import Input from "../components/Input.jsx";
 import Button from "../components/Button.jsx";
 import Footer from"../components/Footer.jsx";
+import "./Login.css";
 
 function Login() {
 
@@ -56,7 +57,7 @@ function Login() {
 
     return(
        
-        <div>
+        <div className ="login">
         
             <h1> Login </h1>
 

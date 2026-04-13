@@ -12,7 +12,7 @@ function Card (props){
                 <figure>
                 <blockquote className="blockquote">
                     <p>{props.primaryContent}</p>
-                    <p>{props.secondaryContent}</p>
+                    <h5>{props.secondaryContent}</h5>
                 </blockquote>
                 </figure>
             </div>
