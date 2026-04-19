@@ -27,11 +27,10 @@
 
  ## The user will in the comfort of its own home/work zero inconvenience.
 
- ## Fueldrop will come to aid the user anywhere. Wheter its on the farm, Harbour or a factory generator.
+ ## Fueldrop will come to aid the user anywhere. Wether its on the farm, Harbour or a factory generator.
 
- ## Trucks dont have to  streucggle to turn in a small space, unlicensed vehicles dont have to towed to get filled up with fuel.
+ ## Trucks dont have to  struggle to turn in a small space, unlicensed vehicles dont have to towed to get filled up with fuel.
 
 #### Requirements
  
  ###
-

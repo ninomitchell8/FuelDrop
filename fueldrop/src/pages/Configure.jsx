@@ -76,6 +76,7 @@ function Configure(){
             <Navbar/>
             
             <h1> Fill in your new Inventory Item details</h1>
+            
           <form onSubmit = {handleSubmit}>
             <div>
                 <h4> Select Type </h4>

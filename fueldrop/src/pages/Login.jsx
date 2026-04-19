@@ -50,8 +50,6 @@ function Login() {
                 throw new Error (alert("Failed to log in! Incorrect username or password."));
             }
         
-    
-        
     };
     
 

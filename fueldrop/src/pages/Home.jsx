@@ -16,7 +16,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 function Home(){
 
-    const locations = useLocation();
+    const location = useLocation();
 
     const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ function Home(){
 
    const [selectedItems,setSelectedItems] = useState ([]); // select button
 
-   const [location,setLocation] = useState (null); //intial state no valid data = null
+   const [locations,setLocation] = useState (null); //intial state no valid data = null
 
    const [order,setOrder] = useState({
 
@@ -225,14 +225,19 @@ function Home(){
 
             }
 
-             if (location.state?.refresh) {
-                fetchData();
+             
     }
-       };
+       
 
     fetchData(); //manual run
     
-},[locations.state]);
+},[]);
+
+useEffect(() => {
+    if (location.state?.refresh) {
+        fetchData();
+    }
+}, [location.state]);
 
 
     

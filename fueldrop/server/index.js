@@ -1,10 +1,10 @@
 import express, { json } from "express";
 import cors from "cors";
 import sqlite3 from "sqlite3";
-import { open } from "sqlite";
 import bcrypt from "bcryptjs"; 
 import jwt from "jsonwebtoken";
-import Openrouteservice from 'openrouteservice-js';
+import dotenv from "dotenv";
+dotenv.config();
 
 
 const app = express();
@@ -151,7 +151,7 @@ app.get('/home', auth, (req, res) => {
         (err, rows) => { //rows = var name of results - naturally array format
         if (err) {
             console.error("DB error:", err.message);
-            return res.status(500).json([]); // send empty array on error
+            return res.status(500).json([{ error: err.message }]); // send empty array on error
         }
         res.json(rows || []); // send actual rows
         }
@@ -167,6 +167,7 @@ app.delete("/inventory/:id", auth, async (req, res) => {
  
     // Optional: check if the item belongs to the user
         db.get(
+            
             "SELECT * FROM inventory WHERE inventory_id = ? AND user_id = ?",
             
             [id, user_id],
@@ -349,6 +350,8 @@ app.post ("/invoice",auth, async(req,res)=>{
 app.post("/eta",auth, async(req,res) =>{
 
     console.log("ETA ROUTE HIT");
+    
+    const api = process.env.ORS_API_KEY;
 
 try{
 
@@ -377,7 +380,6 @@ try{
 
     const destination = [Number(location.longitude),Number(location.latitude)]
 
-    const api = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImQwMDM0ZGY5OWQ4MDQwNzk4NzFjNDU1YTg1MTE3NmQxIiwiaCI6Im11cm11cjY0In0="
     
     const response = await fetch ("https://api.openrouteservice.org/v2/matrix/driving-car",{
 
