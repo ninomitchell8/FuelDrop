@@ -9,11 +9,12 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT|| 5000;
+app.listen(PORT, () => console.log(`Server running on ${PORT}`));
 app.set("trust proxy", 1);
 
 app.use(cors({
 
-    origin: "https://literate-cod-jpx676qxq6q3pwp5-5173.app.github.dev",
+    origin: ["http://localhost:3000","https://your-vercel-url.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     
