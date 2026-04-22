@@ -55,9 +55,9 @@ const db = new sqlite3.Database("./fueldrop.db",(err) => {
 
 app.post ('/register',async (req, res) => {
 
-    const {name,lastname,password,confirmPassword,email,cellphone} = req.body; //Object destructuring - extract req.body property
+    const {name, lastname, password, confirmPassword, email, cellphone} = req.body; //Object destructuring - extract req.body property
 
-    if(!name|| !lastname || !password || !confirmPassword || !email || !cellphone){
+    if( !name || !lastname || !password || !confirmPassword || !email || !cellphone){
 
         return res.status(400).json({error:"All fields required"}); //key-value_client error/bad req
     }

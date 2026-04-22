@@ -109,7 +109,7 @@ function Register(){
                 />
 
             <Button 
-                type = "submit"
+                type = "button"
                 name = {<> <FontAwesomeIcon icon={faArrowLeft}/>Login</> }
                 to  = "/Login.jsx"
                 />
