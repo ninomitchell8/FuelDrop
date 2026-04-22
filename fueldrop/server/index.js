@@ -13,13 +13,12 @@ app.listen(PORT, () => console.log(`Server running on ${PORT}`));
 app.set("trust proxy", 1);
 
 app.use(cors({
-
-    origin: ["https://fuel-drop-nu.vercel.app"],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
-    
+  origin: "https://fuel-drop-nu.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
+
 app.options("*", cors());
 
 app.use(express.json());
