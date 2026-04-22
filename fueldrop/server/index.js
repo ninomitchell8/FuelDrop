@@ -14,11 +14,13 @@ app.set("trust proxy", 1);
 
 app.use(cors({
 
-    origin: ["fuel-drop-nu.vercel.app"],
+    origin: ["https://fuel-drop-nu.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
     
 }));
+app.options("*", cors());
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
@@ -42,7 +44,7 @@ function auth(req, res, next) {
 }
 
 
-const db = new sqlite3.Database("/workspaces/FuelDrop/fueldrop/fueldrop.db",(err) => {
+const db = new sqlite3.Database("./fueldrop.db",(err) => {
 
         if (err) console.error(err.message);
         
