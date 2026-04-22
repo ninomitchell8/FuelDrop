@@ -199,7 +199,7 @@ function Home(){
 
         try{
 
-            const res = await fetch ("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/home",{
+            const res = await fetch (`${import.meta.env.VITE_API_URL}/home`,{
 
                 headers:{                 
                     "Authorization" : `Bearer ${token}`

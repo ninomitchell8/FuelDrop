@@ -34,7 +34,7 @@ function Register(){
 
      try{
 
-        const response = await fetch ("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/register",{ //fetching resource from network.pauses exuecution before functionuntil fetch executed
+        const response = await fetch (`${import.meta.env.VITE_API_URL}/register`,{ //fetching resource from network.pauses exuecution before functionuntil fetch executed
             method:"POST",
             headers:{ "Content-Type": "application/json"},//response data in JSON format
             body: JSON.stringify(formData),//converts JSON data to string format

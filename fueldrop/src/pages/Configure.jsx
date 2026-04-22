@@ -42,7 +42,7 @@ function Configure(){
             console.log("FORM DATA:", formData);
 
 
-            const response = await fetch("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/configure",{ 
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/configure`,{ 
 
     
                 method: "POST",

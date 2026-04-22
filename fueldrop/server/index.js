@@ -14,7 +14,7 @@ app.set("trust proxy", 1);
 
 app.use(cors({
 
-    origin: ["http://localhost:3000","https://your-vercel-url.vercel.app"],
+    origin: ["fuel-drop-nu.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     
