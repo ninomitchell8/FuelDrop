@@ -42,7 +42,7 @@ function Configure(){
             console.log("FORM DATA:", formData);
 
 
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/configure`,{ 
+            const response = await fetch("https://fueldrop-3an7.onrender.com/configure",{ 
 
     
                 method: "POST",

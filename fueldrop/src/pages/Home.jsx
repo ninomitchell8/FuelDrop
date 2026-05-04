@@ -199,7 +199,7 @@ function Home(){
 
         try{
 
-            const res = await fetch (`${import.meta.env.VITE_API_URL}/home`,{
+            const res = await fetch ("https://fueldrop-3an7.onrender.com/home",{
 
                 headers:{                 
                     "Authorization" : `Bearer ${token}`

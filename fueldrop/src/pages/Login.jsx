@@ -27,7 +27,7 @@ function Login() {
 
         try{
 
-            const response = await fetch (`${import.meta.env.VITE_API_URL}/login`,{
+            const response = await fetch ("https://fueldrop-3an7.onrender.com/login",{
 
             method:"POST",
             headers:{ "Content-Type": "application/json"},//response data in JSON format
