@@ -46,7 +46,7 @@ function Register(){
         if (response.ok){ //boolean value
 
 
-            navigate("/Login.jsx");                     
+            navigate("/login");                     
         }
 
     }catch (err){
@@ -77,7 +77,7 @@ function Register(){
                 onChange = {handleChange}
                 />
             <Input 
-                type = "number"
+                type = "text"
                 name = "cellphone"
                 placeholder = "Cellphone"
                 value = {formData.cellphone}

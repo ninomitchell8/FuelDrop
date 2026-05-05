@@ -67,7 +67,7 @@ function Home(){
 
             const res = await fetch(
 
-                `https://fueldrop-3an7.onrender.com//inventory/${id}`,{
+                `https://fueldrop-3an7.onrender.com/inventory/${id}`,{
                     method : "DELETE",
                     headers : {
                         "Authorization" : `Bearer ${token}`
@@ -184,16 +184,15 @@ function Home(){
 
         }catch(err) {
 
-                    throw new Error (alert("No data captured for invoice"));
-            
+            console.error(err);
+            alert("No data captured for invoice");
+      
                 }
 
     };
  
 
    useEffect( () => { //not allowed to make async
-
-    
 
     const fetchData = async() => {
 
@@ -232,6 +231,10 @@ function Home(){
     fetchData(); //manual run
     
 },[]);
+
+useEffect(() => {
+    fetchData();
+}, []);
 
 useEffect(() => {
     if (location.state?.refresh) {

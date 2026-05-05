@@ -105,7 +105,7 @@ function Invoice() {
             <div>
 
                 <Button 
-                type = "submit"
+                type = "button"
                 name = {<><FontAwesomeIcon icon={faArrowLeft}/>Back </>}
                 to = "/Home.jsx"
                 />

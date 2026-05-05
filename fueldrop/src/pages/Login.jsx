@@ -38,17 +38,18 @@ function Login() {
      
         if (response.ok){ //boolean value
 
-            navigate("/home.jsx");
+            navigate("/home");
            
             localStorage.setItem("token", data.token);
             console.log("JWT:", data.token);
             
         }
 
-            }catch (err){
-
-                throw new Error (alert("Failed to log in! Incorrect username or password."));
-            }
+            } catch (err) {
+                    console.error(err);
+                    alert("Failed to log in! Incorrect username or password.");
+                }
+            
         
     };
     
@@ -83,7 +84,7 @@ function Login() {
                 />
               
            <Button 
-                type ="submit"
+                type ="button"
                 name = "Create Account"
                 to = "/Register.jsx"
                 />

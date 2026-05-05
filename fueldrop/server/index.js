@@ -8,8 +8,6 @@ dotenv.config();
 
 
 const app = express();
-const PORT = process.env.PORT|| 5000;
-app.set("trust proxy", 1);
 
 const corsOptions = {
   origin: "https://fuel-drop-nu.vercel.app",   //"
@@ -18,10 +16,13 @@ const corsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
+
+
+
+const PORT = process.env.PORT|| 5000;
+app.set("trust proxy", 1);
+
 app.use(cors(corsOptions));
-
-app.options(/.*/, cors(corsOptions));
-
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
@@ -35,7 +36,7 @@ function auth(req, res, next) {
 
   try {
     const token = authHeader.split(" ")[1];
-    const user = jwt.verify(token, "SUPER_SECRET_KEY");
+    const user = jwt.verify(token, process.env.JWT_SECRET);
     req.user = user;
     next();
   } catch (err) {
@@ -94,7 +95,7 @@ app.post('/login',async (req, res) => {
 
     if (!email ||!password){
 
-        return res.status(400),({error:"All fields required"});
+        return res.status(400).json({error:"All fields required"});
     }
 
     const sql = "SELECT * FROM users WHERE email = ?";
@@ -123,7 +124,7 @@ app.post('/login',async (req, res) => {
                             email: user.email
                             };
         
-        const token = jwt.sign(payload, "SUPER_SECRET_KEY", {
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {
             expiresIn: "1h",
         });
 
