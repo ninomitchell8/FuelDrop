@@ -12,7 +12,7 @@ const PORT = process.env.PORT|| 5000;
 app.set("trust proxy", 1);
 
 const corsOptions = {
-  origin: "https://fuel-drop-nu.vercel.app",
+  origin: "https://fuel-drop-nu.vercel.app",   //"
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],

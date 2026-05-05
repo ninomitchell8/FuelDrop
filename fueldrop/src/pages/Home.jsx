@@ -67,7 +67,7 @@ function Home(){
 
             const res = await fetch(
 
-                `https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/inventory/${id}`,{
+                `https://fueldrop-3an7.onrender.com//inventory/${id}`,{
                     method : "DELETE",
                     headers : {
                         "Authorization" : `Bearer ${token}`
@@ -157,7 +157,7 @@ function Home(){
 
             console.log("ORDER:", order);
 
-            const res = await fetch("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/invoice",{ //sends order to backend
+            const res = await fetch("https://fueldrop-3an7.onrender.com/invoice",{ //sends order to backend
 
     
                 method: "POST",
