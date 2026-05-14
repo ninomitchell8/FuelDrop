@@ -437,6 +437,6 @@ app.post("/store-user-data", auth, (req, res) => {
 
 
 
-app.listen (PORT,() => {
+app.listen (PORT,'0.0.0.0',() => {
     console.log(`Server running on ${PORT}`);
 });
