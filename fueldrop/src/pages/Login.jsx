@@ -46,6 +46,11 @@ function Login() {
 
         }
 
+        if (!response.ok){
+            alert(data.error);
+            return;
+        }
+
             } catch (err) {
                     console.error(err);
                     alert("Failed to log in! Incorrect username or password.");

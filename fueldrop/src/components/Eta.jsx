@@ -19,7 +19,7 @@ function Eta({orderId}){
 
         try {
 
-            const res = await fetch ("https://literate-cod-jpx676qxq6q3pwp5-5000.app.github.dev/eta",{
+            const res = await fetch ("https://fueldrop-3an7.onrender.com/eta",{
 
                 method:"POST",
                 headers:{                 
