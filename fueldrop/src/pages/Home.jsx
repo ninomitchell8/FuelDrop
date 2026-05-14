@@ -190,9 +190,6 @@ function Home(){
                 }
 
     };
- 
-
-   useEffect( () => { //not allowed to make async
 
     const fetchData = async() => {
 
@@ -226,21 +223,19 @@ function Home(){
 
              
     }
-       
+ 
+
+   useEffect( () => { //not allowed to make async
 
     fetchData(); //manual run
     
-},[]);
+    },[]);
 
-useEffect(() => {
-    fetchData();
-}, []);
-
-useEffect(() => {
-    if (location.state?.refresh) {
-        fetchData();
-    }
-}, [location.state]);
+    useEffect(() => {
+        if (location.state?.refresh) {
+            fetchData();
+        }
+    }, [location.state]);
 
 
     
