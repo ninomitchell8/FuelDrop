@@ -173,7 +173,7 @@ function Home(){
             if (selectedItems.length === 0){
 
                     alert("Add an item to the fueling queue to proceed");
-                    navigate("/home");
+                    navigate("/home.jsx");
                 }
                 
             

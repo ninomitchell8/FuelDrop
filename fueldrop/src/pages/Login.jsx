@@ -38,12 +38,12 @@ function Login() {
      
         if (response.ok){ //boolean value
 
-            navigate("/home");
+            navigate("/home.jsx");
            
             localStorage.setItem("token", data.token);
             console.log("JWT:", data.token);
             
-            
+
         }
 
             } catch (err) {
