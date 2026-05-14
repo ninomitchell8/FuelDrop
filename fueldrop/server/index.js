@@ -54,6 +54,48 @@ const db = new sqlite3.Database("./fueldrop.db",(err) => {
     
 });
 
+db.serialize(() => {
+
+    db.run(`
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            lastname TEXT NOT NULL,
+            password TEXT NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            cellphone TEXT NOT NULL
+        )
+    `);
+
+    db.run(`
+        CREATE TABLE IF NOT EXISTS inventory (
+            inventory_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            type TEXT NOT NULL,
+            make TEXT NOT NULL,
+            model TEXT NOT NULL,
+            regNumber TEXT UNIQUE NOT NULL,
+            fuel TEXT NOT NULL,
+            litres INTEGER NOT NULL,
+            user_id INTEGER,
+            FOREIGN KEY(user_id) REFERENCES users(id)
+        )
+    `);
+
+    db.run(`
+        CREATE TABLE IF NOT EXISTS orders (
+            order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER,
+            totalPrice REAL,
+            latitude REAL,
+            longitude REAL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(user_id) REFERENCES users(id)
+        )
+    `);
+
+    console.log("Tables ready");
+});
+
 app.post ('/register',async (req, res) => {
 
     const {name, lastname, password, confirmPassword, email, cellphone} = req.body; //Object destructuring - extract req.body property
