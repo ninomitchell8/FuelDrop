@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-  origin: "https://fuel-drop-nu.vercel.app",   //"
+  origin: "https://fuel-drop-nu.vercel.app",   
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -76,8 +76,8 @@ app.post ('/register',async (req, res) => {
         db.run(user, [name, lastname, hashedPassword, email, cellphone], function (err){ //executes query with array of values
 
         if (err){
-            console.error(err.message);
-            return res.status(400).json({error:"Email already registered"}); //key-value_Server error
+            console.error("SQL ERROR:", err.message);
+            return res.status(400).json({error: err.message});
         }
 
         res.json({message: "Successfully registered!"});

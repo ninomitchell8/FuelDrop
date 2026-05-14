@@ -40,7 +40,7 @@ function Register(){
             body: JSON.stringify(formData),//converts JSON data to string format
         });
         const data = await response.json();
-        console.log("Success:", data.message);
+        console.log("SERVER RESPONSE:", data);
       
 
         if (response.ok){ //boolean value
@@ -111,7 +111,7 @@ function Register(){
             <Button 
                 type = "button"
                 name = {<> <FontAwesomeIcon icon={faArrowLeft}/>Login</> }
-                to  = "/Login.jsx"
+                to  = "/login.jsx"
                 />
 
             <Button 
