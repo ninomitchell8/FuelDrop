@@ -131,10 +131,10 @@ function Configure(){
                     />
 
                  <Radio 
-                    labelName = "Boiler"
+                    labelName = "Earth moving equipment"
                     name = "type"
                     onChange = {handleChange}
-                    value ="Boiler"
+                    value ="Earth moving equipment"
                     />
                 
                 <Radio 
